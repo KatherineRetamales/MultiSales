@@ -12,13 +12,6 @@ public class App
 {
     public static void main( String[] args )
     {
-
-        System.out.println( "Hello World!" );
-
-        UsuarioDAO usuarioDAO = new UsuarioDAO();
-
-        Usuario nuevoUsuario = new Usuario("Priscila", "Sagua", "PA A 37", "Temuco", "priscila@email.com", "contrasena", "admin", 93000000);
-        usuarioDAO.insert(nuevoUsuario);
         Scanner scanner = new Scanner(System.in);
 
         // Inicio de sesión
@@ -55,7 +48,7 @@ public class App
 
     private static void menuAdmin(Scanner scanner) {
         while (true) {
-            System.out.println("\n¿Que desea hacer?:");
+            System.out.println("\nUsted está en en menu de Admin. ¿Qué desea hacer?:");
             System.out.println("1. Agregar Usuario");
             System.out.println("2. Editar Usuario");
             System.out.println("3. Eliminar Usuario");
