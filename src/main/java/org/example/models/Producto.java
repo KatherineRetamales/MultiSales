@@ -26,6 +26,9 @@ public class Producto {
     @OneToMany(mappedBy ="producto", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Pedido> pedidos= new ArrayList<>();
 
+
+
+
     @ManyToOne
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
@@ -96,6 +99,7 @@ public class Producto {
         this.pedidos = pedidos;
     }
 
+
     public Categoria getCategoria() {
         return categoria;
     }
@@ -103,4 +107,5 @@ public class Producto {
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
+
 }
