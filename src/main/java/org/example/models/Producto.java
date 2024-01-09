@@ -3,8 +3,10 @@ package org.example.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Entity
 public class Producto {
@@ -19,13 +21,18 @@ public class Producto {
     private String descripcionProducto;
     private double precio;
 
+
     //Relaciones
     @OneToMany(mappedBy ="producto", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Pedido> pedidos= new ArrayList<>();
 
+
+
+
     @ManyToOne
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
+
 
 
     //Constructores
@@ -92,6 +99,7 @@ public class Producto {
         this.pedidos = pedidos;
     }
 
+
     public Categoria getCategoria() {
         return categoria;
     }
@@ -99,4 +107,5 @@ public class Producto {
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
+
 }
