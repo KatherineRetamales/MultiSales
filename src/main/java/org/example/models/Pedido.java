@@ -20,6 +20,10 @@ public class Pedido {
     private Date fechaCompra;
     private double totalCompra;
 
+    @ManyToOne
+    @JoinColumn(name = "producto_id")
+    private Producto producto;
+
     public Pedido() {}
     public Pedido(Long idPedido, String metodoPago, Integer idEnvio, int cantidadProducto, Date fechaCompra, double totalCompra) {
         this.idPedido = idPedido;
@@ -84,5 +88,13 @@ public class Pedido {
 
     public void setTotalCompra(double totalCompra) {
         this.totalCompra = totalCompra;
+    }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 }
