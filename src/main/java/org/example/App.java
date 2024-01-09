@@ -1,6 +1,10 @@
 package org.example;
+import org.example.dao.PedidoDAO;
 import org.example.dao.UsuarioDAO;
+import org.example.models.Pedido;
 import org.example.models.Usuario;
+
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -32,7 +36,7 @@ public class App
                    menuAdmin(scanner);
                    break;
                case "cliente":
-                   menuCliente(scanner);
+                   menuCliente(scanner, usuarioLgueado.getIdUsuario());
                    break;
                default:
                    System.out.println("El rol incorrecto");
@@ -126,13 +130,14 @@ public class App
 
     }
 
-    private static void menuCliente(Scanner scanner) {
+    private static void menuCliente(Scanner scanner, Long idUsuario) {
+        PedidoDAO pedidoDAO = new PedidoDAO();
         while (true) {
-            System.out.println("\nUsted está en en menu de Cliente. ¿Qué desea hacer?:");
+            System.out.println("\nUsted está en el menu de Cliente. ¿Qué desea hacer?");
             System.out.println("1. Ver productos.");
             System.out.println("2. Ver carrito de compras");
-            System.out.println("3. Ver compras");
-            System.out.println("4. Editar perfil");
+            System.out.println("3. Ver mis compras");
+            System.out.println("4. Datos personales");
             System.out.println("5. Cerrar sesión");
 
             int opcion = scanner.nextInt();
@@ -140,14 +145,15 @@ public class App
             switch (opcion) {
                 case 1:
                     // Lógica para ver productos
-                    menuVerproductos(scanner);
+                    menuVerproductos(scanner, idUsuario);
                     break;
                 case 2:
                     // Lógica para ver carrito de compras
-                    menuCarritoCompras(scanner);
+                    menuCarritoCompras(scanner, idUsuario);
                     break;
                 case 3:
                     // Lógica para ver compras
+                    verComprasUsuario(idUsuario, pedidoDAO);
                     break;
                 case 4:
                     // Lógica para editar perfil
@@ -162,12 +168,13 @@ public class App
         }
     }
 
-    private static void menuVerproductos(Scanner scanner){
+    private static void menuVerproductos(Scanner scanner, Long idUsuario){
         while (true) {
             System.out.println("\nProductos:");
             System.out.println("1. Agregar al carrito de compras.");
             System.out.println("2. Ver carrito de compras");
-            System.out.println("3. Volver al menu principal");;
+            System.out.println("3. Filtrar productos por categoría.");
+            System.out.println("4. Volver al menu principal");;
 
             int opcion = scanner.nextInt();
 
@@ -176,11 +183,14 @@ public class App
                     // Lógica para agregar al carrito de compras
                     break;
                 case 2:
-                    menuCarritoCompras(scanner);
+                    menuCarritoCompras(scanner, idUsuario);
                     break;
                 case 3:
                     // Lógica para volver al menu principal
-                    menuCliente(scanner);
+                    menuCliente(scanner, idUsuario);
+                    break;
+                case 4:
+                    // Lógica para filtrar productos por categoria
                     break;
                 default:
                     System.out.println("Opción no válida. Por favor, selecciona una opción válida.");
@@ -188,7 +198,7 @@ public class App
         }
     }
 
-    private static void menuCarritoCompras(Scanner scanner){
+    private static void menuCarritoCompras(Scanner scanner, Long idUsuario){
         while (true) {
             System.out.println("\nCarrito de compras:");
             System.out.println("1. Eliminar producto.");
@@ -206,11 +216,30 @@ public class App
                     break;
                 case 3:
                     // Lógica para volver al menu principal
-                    menuCliente(scanner);
+                    menuCliente(scanner, idUsuario);
                     break;
                 default:
                     System.out.println("Opción no válida. Por favor, selecciona una opción válida.");
             }
         }
     }
+
+    private static void verComprasUsuario(Long idUsuario, PedidoDAO pedidoDAO){
+        List<Pedido> pedidos = pedidoDAO.findByIdUsuario(idUsuario);
+
+        if (pedidos.isEmpty()) {
+            System.out.println("No tienes compras realizadas.");
+        } else {
+            System.out.println("Lista de compras:");
+            for (Pedido pedido : pedidos) {
+                System.out.println("ID: " + pedido.getIdPedido());
+                System.out.println("Fecha compra: " + pedido.getFechaCompra());
+                System.out.println("Cantidad de productos: " + pedido.getCantidadProducto());
+                System.out.println("Total compra: " + pedido.getTotalCompra());
+                System.out.println("Método de pago: " + pedido.getMetodoPago());
+                System.out.println("------------------------------");
+            }
+        }
+    }
+
 }
