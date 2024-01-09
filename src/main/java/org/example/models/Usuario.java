@@ -2,10 +2,8 @@ package org.example.models;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Usuario {
@@ -16,8 +14,19 @@ public class Usuario {
     private String nombreUsuario, apellidoUsuario, direccion, ciudad,email, contrasena, rol;
     private int numCelular;
 
-    public Usuario() {
 
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<Pedido> pedidos;
+
+    //contructor
+    public Usuario(String nombreUsuario, String apellidoUsuario, String direccion, String ciudad, String email, String contrasena, String rol, int numCelular) {
+    this.nombreUsuario = nombreUsuario;
+    this.apellidoUsuario = apellidoUsuario;
+    this.direccion = direccion;
+    this.ciudad = ciudad;
+    this.contrasena = contrasena;
+    this.rol = rol;
+    this.numCelular  = numCelular;
     }
 
     public Long getIdUsuario() {
