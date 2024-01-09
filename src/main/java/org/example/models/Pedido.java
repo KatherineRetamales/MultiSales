@@ -11,9 +11,11 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private Long idPedido;
+
     @ManyToOne
     @JoinColumn(name="idUsuario")
     private Usuario usuario;
+
     private String metodoPago;
     private Integer idEnvio;
     private int cantidadProducto;
