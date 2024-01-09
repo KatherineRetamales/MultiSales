@@ -18,6 +18,7 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Pedido> pedidos;
 
+    //contructor
     public Usuario(String nombreUsuario, String apellidoUsuario, String direccion, String ciudad, String email, String contrasena, String rol, int numCelular) {
     this.nombreUsuario = nombreUsuario;
     this.apellidoUsuario = apellidoUsuario;
