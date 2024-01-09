@@ -4,6 +4,10 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 @Entity
 public class Producto {
 
@@ -17,9 +21,13 @@ public class Producto {
     private String descripcionProducto;
     private double precio;
 
-    @ManyToOne
-    @JoinColumn(name = "categoria_id")
-    private Categoria categoria;
+
+    //Relaciones
+    @OneToMany(mappedBy ="producto", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Pedido> pedidos= new ArrayList<>();
+
+
+
 
     //Constructores
     public Producto() {
@@ -75,11 +83,15 @@ public class Producto {
         this.precio = precio;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
+
+    //getters and setters de las relaciones
+    public List<Pedido> getPedidos() {
+        return pedidos;
     }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
     }
+
+
 }
