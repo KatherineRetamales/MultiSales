@@ -22,9 +22,10 @@ public class Producto {
     //Relaciones
     @OneToMany(mappedBy ="producto", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Pedido> pedidos= new ArrayList<>();
-
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Categoria> categorias = new ArrayList<>();
+    
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
 
 
     //Constructores
