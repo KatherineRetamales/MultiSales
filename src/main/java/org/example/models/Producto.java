@@ -2,10 +2,9 @@ package org.example.models;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Producto {
@@ -19,6 +18,14 @@ public class Producto {
     private int stock;
     private String descripcionProducto;
     private double precio;
+
+    //Relaciones
+    @OneToMany(mappedBy ="producto", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Pedido> pedidos= new ArrayList<>();
+
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Categoria> categorias = new ArrayList<>();
+
 
     //Constructores
     public Producto() {
@@ -72,5 +79,23 @@ public class Producto {
 
     public void setPrecio(double precio) {
         this.precio = precio;
+    }
+
+
+    //getters and setters de las relaciones
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    public List<Categoria> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
     }
 }
