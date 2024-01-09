@@ -2,10 +2,7 @@ package org.example.models;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Producto {
@@ -19,6 +16,8 @@ public class Producto {
     private int stock;
     private String descripcionProducto;
     private double precio;
+
+
 
     //Constructores
     public Producto() {
