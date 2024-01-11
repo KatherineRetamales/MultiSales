@@ -19,6 +19,11 @@ public class Usuario {
     private List<Pedido> pedidos;
 
     //contructor
+
+    public Usuario() {
+
+    }
+
     public Usuario(String nombreUsuario, String apellidoUsuario, String direccion, String ciudad, String email, String contrasena, String rol, int numCelular) {
     this.nombreUsuario = nombreUsuario;
     this.apellidoUsuario = apellidoUsuario;

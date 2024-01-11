@@ -6,10 +6,40 @@ import org.example.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import javax.persistence.Query;
 import java.util.List;
 
 public class UsuarioDAO {
 
+    public List<Usuario> findByCorreoAndClave(String email){
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            return session.createQuery("FROM Usuario WHERE email='"+email+"'").list();
+        } catch (Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public Usuario findByCorreo(String email, String clave){
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            String hql = "FROM Usuario WHERE email= :correo AND contrasena= :clave";
+
+            // Crear la consulta HQL
+            Query query = session.createQuery(hql, Usuario.class);
+            query.setParameter("correo", email);
+            query.setParameter("clave", clave);
+
+            // Obtener el resultado de la consulta
+            Usuario usuario = (Usuario) ((org.hibernate.query.Query<?>) query).uniqueResult();
+            session.close();
+            return usuario;
+        } catch (Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
+    }
 
     public Usuario findById(Long id){
         try {
