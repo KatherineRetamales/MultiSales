@@ -44,7 +44,8 @@ public class App
                    System.out.println("El rol incorrecto");
            }
        } else {
-           System.out.println("Credenciales incorrectas. Saliendo del programa.");
+           System.out.println("Credenciales incorrectas.");
+           menuLogearse(scanner);
        }
    }
 
@@ -52,10 +53,6 @@ public class App
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         Usuario usuario = usuarioDAO.findByCorreo(correo, clave);
         return usuario;
-    }
-
-    private static boolean verificarClave(String claveIngresada, String claveAlmacenada) {
-        return claveIngresada.equals(claveAlmacenada);
     }
 
     private static void menuAdmin(Scanner scanner) {
