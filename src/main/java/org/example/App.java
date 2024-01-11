@@ -28,27 +28,31 @@ public class App
 
        System.out.print("Ingrese su clave: ");
        String clave = scanner.nextLine();
-       Usuario usuarioLgueado = loguearse(correo,clave);
-       if(usuarioLgueado != null){
-           System.out.println("Inicio de sesión exitoso. ¡Bienvenido, " + usuarioLgueado.getNombreUsuario() + "!");
-           switch (usuarioLgueado.getRol()) {
+
+       Usuario usuarioLogueado = loguearse(correo,clave);
+
+       if(usuarioLogueado != null){
+           System.out.println("Inicio de sesión exitoso. ¡Bienvenido, " + usuarioLogueado.getNombreUsuario() + "!");
+           switch (usuarioLogueado.getRol()) {
                case "admin":
                    menuAdmin(scanner);
                    break;
                case "cliente":
-                   menuCliente(scanner, usuarioLgueado.getIdUsuario());
+                   menuCliente(scanner, usuarioLogueado.getIdUsuario());
                    break;
                default:
                    System.out.println("El rol incorrecto");
            }
        } else {
-           System.out.println("Credenciales incorrectas. Saliendo del programa.");
+           System.out.println("Credenciales incorrectas.");
+           menuLogearse(scanner);
        }
    }
 
-    private static Usuario loguearse(String usuario, String clave){
-        Usuario usuarioLogueado = new Usuario("Katherine","Retamales","Calle Vitoria 4037","Santiago","kretamales280@gmail.com","123","cliente",2);
-        return usuarioLogueado;
+    private static Usuario loguearse(String correo, String clave){
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        Usuario usuario = usuarioDAO.findByCorreo(correo, clave);
+        return usuario;
     }
 
     private static void menuAdmin(Scanner scanner) {
