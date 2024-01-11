@@ -224,6 +224,7 @@ public class App
         }
     }
 
+
     private static void verComprasUsuario(Long idUsuario, PedidoDAO pedidoDAO){
         List<Pedido> pedidos = pedidoDAO.findByIdUsuario(idUsuario);
 
