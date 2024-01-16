@@ -20,6 +20,22 @@ public class Categoria {
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Producto> productos = new ArrayList<>();
 
+    public Categoria() {
+    }
+
+    public static void editarCategoria() {
+    }
+
+
+    public static void deleteCategoria() {
+    }
+
+    public static void agregarCategoria() {
+    }
+
+    public static void verTodasCategorias() {
+    }
+
     public List<Producto> getProductos() {
         return productos;
     }
@@ -66,6 +82,14 @@ public class Categoria {
                 ", descripcion='" + descripcion + '\'' +
                 '}';
     }
+
+
+    public void setCategoria() {
+    }
+
+    public void setName() {
+    }
+
 
 
 }

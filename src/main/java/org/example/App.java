@@ -1,8 +1,12 @@
 package org.example;
+import org.example.dao.CategoriaDAO;
 
 import org.example.dao.PedidoDAO;
+import org.example.dao.ProductoDAO;
 import org.example.dao.UsuarioDAO;
+import org.example.models.Categoria;
 import org.example.models.Pedido;
+import org.example.models.Producto;
 import org.example.models.Usuario;
 
 
@@ -52,6 +56,8 @@ public class App {
     }
 
     private static void menuAdmin(Scanner scanner) {
+       ProductoDAO productoDAO = new ProductoDAO();
+
         while (true) {
             System.out.println("\nUsted está en en menu de Admin. ¿Qué desea hacer?:");
             System.out.println("1. Agregar Usuario");
@@ -69,6 +75,7 @@ public class App {
             System.out.println("13. Cerrar sesión");
 
             int opcion = scanner.nextInt();
+
 
             switch (opcion) {
                 case 1:
@@ -88,6 +95,10 @@ public class App {
                     break;
                 case 5:
 
+
+                    // Lógica para agregar producto
+                    agregarProducto(scanner,productoDAO);
+                    System.out.println("Producto agregado");
                     break;
                 case 6:
                     // Lógica para editar producto
@@ -101,21 +112,41 @@ public class App {
                     // Lógica para ver todos los productos
                     System.out.println("Producto eliminado");
                     break;
+
                 case 9:
+
                     // Lógica para agregar categoria
-                    System.out.println("Categoria agregada");
+                    System.out.println("\n¿Desea agregar una categoria?");
+                    System.out.println("1. Sí");
+                    System.out.println("2. No");
+                    Categoria nuevaCategoria = new Categoria();
+                    Categoria.agregarCategoria();
+
+
                     break;
                 case 10:
                     // Lógica para editar categoria
-                    System.out.println("Categoria editada");
+                    System.out.println("\n¿Desea editar una categoria?");
+                    System.out.println("1. Sí");
+                    System.out.println("2. No");
+                    Categoria.editarCategoria();
+
                     break;
                 case 11:
                     // Lógica para eliminar categoria
-                    System.out.println("Categoria eliminada");
+                    System.out.println("\n¿Desea eliminar una categoria?");
+                    System.out.println("1. Sí");
+                    System.out.println("2. No");
+                    Categoria.deleteCategoria();
+
                     break;
+
                 case 12:
-                    // Lógica para ver todos los productos
-                    System.out.println("Producto eliminado");
+                    // Lógica para ver todas las categorias
+                    System.out.println("\n¿Desea ver todas las categorias?");
+                    System.out.println("1. Sí");
+                    System.out.println("2. No");
+                    Categoria.verTodasCategorias();
                     break;
                 case 13:
                     System.out.println("Cerrando sesión. ¡Hasta luego!");
@@ -264,6 +295,7 @@ public class App {
                     break;
                 case 4:
                     // Lógica para editar perfil
+                    editarDatosPersonales(scanner, idUsuario);
                     break;
                 case 5:
                     System.out.println("Cerrando sesión. ¡Hasta luego!");
@@ -310,7 +342,7 @@ public class App {
             System.out.println("\nCarrito de compras:");
             System.out.println("1. Eliminar producto.");
             System.out.println("2. Pagar");
-            System.out.println("3. Volver al menu principal");;
+            System.out.println("3. Volver al menu principal");
 
             int opcion = scanner.nextInt();
 
@@ -349,5 +381,106 @@ public class App {
             }
         }
     }
+
+    private static void editarDatosPersonales(Scanner scanner, Long idUsuario) {
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        Usuario usuario = usuarioDAO.findById(idUsuario);
+        System.out.println("¿Que datos desea editar?");
+        System.out.println("1. Editar nombre");
+        System.out.println("2. Editar apellido");
+        System.out.println("3. Editar dirección");
+        System.out.println("4. Editar ciudad");
+        System.out.println("5. Editar correo");
+        System.out.println("6. Editar telefono");
+        System.out.println("7. Ver sus datos personales");
+        System.out.println("8. Volver");
+        System.out.print("Seleccione una opción: ");
+
+        // Leer la opción del usuario
+        int opcion = scanner.nextInt();
+
+        // Realizar la acción correspondiente
+        switch (opcion) {
+            case 1:
+                System.out.print("Ingrese el nuevo nombre: ");
+                String nuevoNombre = scanner.next();
+                usuario.setNombreUsuario(nuevoNombre);
+                usuarioDAO.update(usuario);
+                break;
+            case 2:
+                System.out.print("Ingrese el nuevo apellido: ");
+                String nuevoApellido = scanner.next();
+                usuario.setApellidoUsuario(nuevoApellido);
+                usuarioDAO.update(usuario);
+                break;
+            case 3:
+                System.out.print("Ingrese la nueva dirección: ");
+                String nuevaDireccion = scanner.next();
+                usuario.setDireccion(nuevaDireccion);
+                usuarioDAO.update(usuario);
+                break;
+            case 4:
+                System.out.print("Ingrese la nueva ciudad: ");
+                String nuevaCiudad = scanner.next();
+                usuario.setDireccion(nuevaCiudad);
+                usuarioDAO.update(usuario);
+                break;
+            case 5:
+                System.out.print("Ingrese el nuevo correo: ");
+                String nuevoCorreo = scanner.next();
+                usuario.setDireccion(nuevoCorreo);
+                usuarioDAO.update(usuario);
+                break;
+            case 6:
+                System.out.print("Ingrese el nuevo teléfono: ");
+                String nuevoTelefono = scanner.next();
+                usuario.setDireccion(nuevoTelefono);
+                usuarioDAO.update(usuario);
+                break;
+            case 7:
+                System.out.println("Información del usuario:");
+                System.out.println("Nombre: " + usuario.getNombreUsuario());
+                System.out.println("Apellido: " + usuario.getApellidoUsuario());
+                System.out.println("Dirección: " + usuario.getDireccion());
+                System.out.println("Ciudad: " + usuario.getCiudad());
+                System.out.println("Correo: " + usuario.getEmail());
+                System.out.println("Teléfono: " + usuario.getNumCelular());
+                break;
+            case 8:
+                menuCliente(scanner, idUsuario);
+                break;
+            default:
+                System.out.println("Opción no válida. Inténtelo de nuevo.");
+        }
+    }
+    public static void agregarProducto (Scanner scanner, ProductoDAO productoDAO) {
+
+        System.out.println("Ingresa el nombre del Producto");
+        String nombreDelProducto = scanner.next();
+        Producto productoNuevo = new Producto();
+        productoNuevo.setNombreProducto(nombreDelProducto);
+
+        System.out.println("Ingresa la cantidad del Producto");
+        int cantidadDelProducto = scanner.nextInt();
+        Producto cantidadDeProductosIngresados = new Producto();
+        cantidadDeProductosIngresados.setStock(cantidadDelProducto);
+
+        System.out.println("Ingresa una descripcion del Producto");
+        String descripcionDelProducto = scanner.next();
+        Producto descripcionDelProductoIngresado = new Producto();
+        descripcionDelProductoIngresado.setDescripcionProducto(descripcionDelProducto);
+
+        System.out.println("Ingresa el precio del Producto");
+        double precioDelProducto = scanner.nextInt();
+        Producto precioDelProductoIngresado = new Producto();
+        precioDelProductoIngresado.setPrecio(precioDelProducto);
+
+
+        Producto producto = new Producto(nombreDelProducto, cantidadDelProducto, descripcionDelProducto, precioDelProducto);
+        productoDAO.insert(producto);
+
+
+    }
+
 
 }

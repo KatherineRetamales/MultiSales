@@ -47,6 +47,9 @@ public class UsuarioDAO {
             Usuario usuario = session.get(Usuario.class, id);
             session.close();
             return usuario;
+
+            return session.get(Usuario.class, id);
+
         } catch (Exception ex){
             ex.printStackTrace();
             return null;
