@@ -346,12 +346,22 @@ public class App {
 
             int opcion = scanner.nextInt();
 
+            Pedido p1 = new Pedido();
+
             switch (opcion) {
                 case 1:
                     // Lógica para eliminar producto del carrito de compras
                     break;
                 case 2:
                     //Logica para pagar
+                    // Realizar el pago en efectivo
+                    /*NO FUNCIONA
+                    if (Pedido.realizarPago()) {
+                        // Generar la boleta si el pago fue exitoso
+                       Pedido.generarBoleta();
+                    }
+
+                     */
                     break;
                 case 3:
                     // Lógica para volver al menu principal

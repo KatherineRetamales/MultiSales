@@ -50,6 +50,7 @@ public class UsuarioDAO {
         } catch (Exception ex){
             ex.printStackTrace();
             return null;
+
         }
     }
     public List<Usuario> findAll(){

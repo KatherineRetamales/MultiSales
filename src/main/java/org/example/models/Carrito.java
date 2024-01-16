@@ -1,6 +1,7 @@
 package org.example.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Carrito {
 
@@ -75,5 +76,27 @@ public class Carrito {
     public void elminarProducto(Carrito producto){
         productosCarrito.remove(producto);
     }
+
+
+
+    public boolean realizarPagoEfectivo(double montoRecibido) {
+        double pago = montoRecibido - subTotal;
+
+        if (pago >= 0) {
+            System.out.println("Pago en efectivo recibido");
+            generarBoleta();
+            return true;
+        } else {
+            System.out.println("Pago no realizado. Por favor, realice su pago.");
+            return false;
+        }
+    }
+
+    private void generarBoleta() {
+
+       
+    }
+
+
 
 }

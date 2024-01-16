@@ -36,6 +36,14 @@ public class Pedido {
         this.totalCompra = totalCompra;
     }
 
+    public static boolean realizarPago() {
+        return false;
+    }
+
+    public static void generarBoleta() {
+    }
+
+
     public Long getIdPedido() {
         return idPedido;
     }
