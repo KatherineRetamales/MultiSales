@@ -249,7 +249,7 @@ public class App {
                     System.out.println("Opcion invalida (1 - 7)");
 
             }
-            UsuarioDAO.update(editUsuario);
+            usuarioDAO.update(editUsuario);
             System.out.println("Usuario editado correctamente! ");
         } System.out.println("Usuario no encontrado");
     }

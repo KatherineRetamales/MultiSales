@@ -37,6 +37,16 @@ public class ProductoDAO {
             return null;
         }
     }
+
+    public List<Producto> findByCategoria(int id){
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            return session.createQuery("FROM Producto WHERE categria_id='"+id+"'").list();
+        } catch (Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
+    }
     public  void insert(Producto producto){
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()){;

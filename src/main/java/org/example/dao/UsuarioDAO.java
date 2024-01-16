@@ -47,7 +47,6 @@ public class UsuarioDAO {
             Usuario usuario = session.get(Usuario.class, id);
             session.close();
             return usuario;
-
         } catch (Exception ex){
             ex.printStackTrace();
             return null;
@@ -82,16 +81,18 @@ public class UsuarioDAO {
             ex.printStackTrace();
         }
     }
-    public static void update(Usuario Usuario){
+
+    public void update(Usuario usuario){
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction transaction = session.beginTransaction();
-            session.saveOrUpdate(Usuario);
+            session.saveOrUpdate(usuario);
             transaction.commit();
         } catch (Exception ex){
             ex.printStackTrace();
         }
     }
+
     public void delete(Usuario Usuario){
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
