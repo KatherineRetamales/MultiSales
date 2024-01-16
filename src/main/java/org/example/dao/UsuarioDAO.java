@@ -78,11 +78,11 @@ public class UsuarioDAO {
             ex.printStackTrace();
         }
     }
-    public void update(Usuario Usuario){
+    public void update(Usuario usuario){
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction transaction = session.beginTransaction();
-            session.saveOrUpdate(Usuario);
+            session.saveOrUpdate(usuario);
             transaction.commit();
         } catch (Exception ex){
             ex.printStackTrace();
