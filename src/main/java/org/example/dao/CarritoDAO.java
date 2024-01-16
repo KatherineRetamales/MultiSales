@@ -46,16 +46,20 @@ public class CarritoDAO {
         }
     }
 
-    public void delete(Carrito Carroproducto) {
+    public void delete(Carrito productosCarrito) {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction transaction = session.beginTransaction();
-            session.delete(Carroproducto);
+            session.delete(productosCarrito);
             transaction.commit();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
+
+
+
+    //public void deleteItem(Carrito Carroproducto)
 
 
 
