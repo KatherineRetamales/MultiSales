@@ -1,6 +1,7 @@
 package org.example;
 import org.example.dao.CategoriaDAO;
 import org.example.dao.PedidoDAO;
+import org.example.dao.ProductoDAO;
 import org.example.dao.UsuarioDAO;
 import org.example.models.Categoria;
 import org.example.models.Pedido;
@@ -56,6 +57,8 @@ public class App {
     }
 
     private static void menuAdmin(Scanner scanner) {
+       ProductoDAO productoDAO = new ProductoDAO();
+
         while (true) {
             System.out.println("\nUsted está en en menu de Admin. ¿Qué desea hacer?:");
             System.out.println("1. Agregar Usuario");
@@ -94,6 +97,7 @@ public class App {
                     break;
                 case 5:
                     // Lógica para agregar producto
+                    agregarProducto(scanner,productoDAO);
                     System.out.println("Producto agregado");
                     break;
                 case 6:
@@ -371,4 +375,34 @@ public class App {
                 System.out.println("Opción no válida. Inténtelo de nuevo.");
         }
     }
+    public static void agregarProducto (Scanner scanner, ProductoDAO productoDAO) {
+
+        System.out.println("Ingresa el nombre del Producto");
+        String nombreDelProducto = scanner.next();
+        Producto productoNuevo = new Producto();
+        productoNuevo.setNombreProducto(nombreDelProducto);
+
+        System.out.println("Ingresa la cantidad del Producto");
+        int cantidadDelProducto = scanner.nextInt();
+        Producto cantidadDeProductosIngresados = new Producto();
+        cantidadDeProductosIngresados.setStock(cantidadDelProducto);
+
+        System.out.println("Ingresa una descripcion del Producto");
+        String descripcionDelProducto = scanner.next();
+        Producto descripcionDelProductoIngresado = new Producto();
+        descripcionDelProductoIngresado.setDescripcionProducto(descripcionDelProducto);
+
+        System.out.println("Ingresa el precio del Producto");
+        double precioDelProducto = scanner.nextInt();
+        Producto precioDelProductoIngresado = new Producto();
+        precioDelProductoIngresado.setPrecio(precioDelProducto);
+
+
+        Producto producto = new Producto(nombreDelProducto, cantidadDelProducto, descripcionDelProducto, precioDelProducto);
+        productoDAO.insert(producto);
+
+
+    }
+
+
 }

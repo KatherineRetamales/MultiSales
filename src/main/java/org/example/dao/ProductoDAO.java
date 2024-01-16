@@ -38,12 +38,15 @@ public class ProductoDAO {
         }
     }
     public  void insert(Producto producto){
-        try {
-            Session session = HibernateUtil.getSessionFactory().openSession();
-            Transaction transaction = session.beginTransaction();
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){;
+            transaction = session.beginTransaction();
             session.save(producto);
             transaction.commit();
         } catch (Exception ex){
+            if (transaction != null) {
+                transaction.rollback();
+            }
             ex.printStackTrace();
         }
     }
