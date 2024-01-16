@@ -7,7 +7,6 @@ import org.example.models.Pedido;
 import org.example.models.Producto;
 import org.example.models.Usuario;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -116,7 +115,6 @@ public class App
                     System.out.println("1. Sí");
                     System.out.println("2. No");
                     Categoria nuevaCategoria = new Categoria();
-                    nuevaCategoria.setFecha(new Date());
                     Categoria.agregarCategoria();
 
 
