@@ -4,7 +4,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -85,13 +84,13 @@ public class Categoria {
     }
 
 
-    public void setCategoria(String perfumeria) {
+    public void setCategoria() {
     }
 
-    public void setName(String perfumeria) {
+    public void setName() {
     }
 
-    public void setFecha(Date date) {
-    }
+
+
 }
 
