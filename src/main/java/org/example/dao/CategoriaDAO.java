@@ -10,6 +10,7 @@ import java.util.List;
 public class CategoriaDAO {
 
 
+
     public static void addCategoriaToMenu(long id, Object nuevaCategoria) {
     }
 

@@ -136,6 +136,8 @@ public class App
                     System.out.println("2. No");
                     Categoria.deleteCategoria();
 
+                    break;
+
                 case 12:
                     // Lógica para ver todas las categorias
                     System.out.println("\n¿Desea ver todas las categorias?");
