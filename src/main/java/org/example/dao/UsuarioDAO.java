@@ -48,11 +48,10 @@ public class UsuarioDAO {
             session.close();
             return usuario;
 
-            return session.get(Usuario.class, id);
-
         } catch (Exception ex){
             ex.printStackTrace();
             return null;
+
         }
     }
     public List<Usuario> findAll(){
