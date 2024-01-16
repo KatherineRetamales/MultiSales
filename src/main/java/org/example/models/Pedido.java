@@ -40,6 +40,9 @@ public class Pedido {
         return false;
     }
 
+    public static void generarBoleta() {
+    }
+
 
     public Long getIdPedido() {
         return idPedido;
