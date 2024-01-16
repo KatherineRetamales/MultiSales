@@ -44,7 +44,7 @@ public class UsuarioDAO {
     public Usuario findById(Long id){
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
-            return session.get(Usuario.class, 1l);
+            return session.get(Usuario.class, id);
         } catch (Exception ex){
             ex.printStackTrace();
             return null;
