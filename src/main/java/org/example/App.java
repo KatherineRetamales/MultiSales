@@ -1,5 +1,6 @@
 package org.example;
 import org.example.dao.CategoriaDAO;
+
 import org.example.dao.PedidoDAO;
 import org.example.dao.ProductoDAO;
 import org.example.dao.UsuarioDAO;
@@ -7,50 +8,48 @@ import org.example.models.Categoria;
 import org.example.models.Pedido;
 import org.example.models.Producto;
 import org.example.models.Usuario;
+
+
+
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * Hello world!
- *
- */
 public class App {
-    public static void main( String[] args )
-    {
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         menuLogearse(scanner);
     }
 
-   private static void menuLogearse(Scanner scanner){
-       // Inicio de sesión
-       System.out.println("Bienvenido al sistema MultiSales.");
-       System.out.print("Ingrese su correo: ");
-       String correo = scanner.nextLine();
+    private static void menuLogearse(Scanner scanner) {
+        // Inicio de sesión
+        System.out.println("Bienvenido al sistema MultiSales.");
+        System.out.print("Ingrese su correo: ");
+        String correo = scanner.nextLine();
 
-       System.out.print("Ingrese su clave: ");
-       String clave = scanner.nextLine();
+        System.out.print("Ingrese su clave: ");
+        String clave = scanner.nextLine();
 
-       Usuario usuarioLogueado = loguearse(correo,clave);
+        Usuario usuarioLogueado = loguearse(correo, clave);
 
-       if(usuarioLogueado != null){
-           System.out.println("Inicio de sesión exitoso. ¡Bienvenido, " + usuarioLogueado.getNombreUsuario() + "!");
-           switch (usuarioLogueado.getRol()) {
-               case "admin":
-                   menuAdmin(scanner);
-                   break;
-               case "cliente":
-                   menuCliente(scanner, usuarioLogueado.getIdUsuario());
-                   break;
-               default:
-                   System.out.println("El rol incorrecto");
-           }
-       } else {
-           System.out.println("Credenciales incorrectas.");
-           menuLogearse(scanner);
-       }
-   }
+        if (usuarioLogueado != null) {
+            System.out.println("Inicio de sesión exitoso. ¡Bienvenido, " + usuarioLogueado.getNombreUsuario() + "!");
+            switch (usuarioLogueado.getRol()) {
+                case "admin":
+                    menuAdmin(scanner);
+                    break;
+                case "cliente":
+                    menuCliente(scanner, usuarioLogueado.getIdUsuario());
+                    break;
+                default:
+                    System.out.println("El rol incorrecto");
+            }
+        } else {
+            System.out.println("Credenciales incorrectas.");
+            menuLogearse(scanner);
+        }
+    }
 
-    private static Usuario loguearse(String correo, String clave){
+    private static Usuario loguearse(String correo, String clave) {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         Usuario usuario = usuarioDAO.findByCorreo(correo, clave);
         return usuario;
@@ -80,22 +79,23 @@ public class App {
 
             switch (opcion) {
                 case 1:
-                    // Lógica para agregar usuario
+
                     agregarUsuario(scanner);
                     break;
                 case 2:
-                    // Lógica para editar usuario
-                    System.out.println("Usuario editado");
+
+                    editarUsuario(scanner);
                     break;
                 case 3:
-                    // Lógica para eliminar usuario
-                    System.out.println("Usuario eliminado");
+                    eliminarUsuario(scanner);
                     break;
                 case 4:
                     // Lógica para ver todos los usuarios
                     System.out.println("Ver todos los usuarios");
                     break;
                 case 5:
+
+
                     // Lógica para agregar producto
                     agregarProducto(scanner,productoDAO);
                     System.out.println("Producto agregado");
@@ -187,6 +187,84 @@ public class App {
         System.out.print(mensaje);
         scanner.nextLine();
         return scanner.nextInt();
+
+    }
+
+    //EDITAR USUARIO
+    private static void editarUsuario(Scanner scanner) {
+        System.out.println("Ingresa el ID del usuario a editar: ");
+        Long idUsuario = scanner.nextLong();
+
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        Usuario editUsuario = usuarioDAO.findById(idUsuario);
+
+        if (editUsuario != null) {
+            System.out.println("Elige la opción a editar");
+            System.out.println("1. Nombre");
+            System.out.println("2. Apellido");
+            System.out.println("3. Dirección");
+            System.out.println("4. Ciudad");
+            System.out.println("5. Contraseña");
+            System.out.println("6. Rol");
+            System.out.println("7. Celular");
+            int opcionIngresada = scanner.nextInt();
+
+            switch (opcionIngresada) {
+                case 1:
+                    System.out.println("Ingresa el nuevo nombre");
+                    String nombreEditado = scanner.next();
+                    editUsuario.setNombreUsuario(nombreEditado);
+                    break;
+                case 2:
+                    System.out.print("Ingrese el apellido: ");
+                    String nuevoApellido = scanner.next();
+                    editUsuario.setApellidoUsuario(nuevoApellido);
+                    break;
+                case 3:
+                    System.out.print("Ingrese la dirección: ");
+                    String nuevaDireccion = scanner.next();
+                    editUsuario.setDireccion(nuevaDireccion);
+                    break;
+                case 4:
+                    System.out.print("Ingrese ciudad: ");
+                    String nuevaCiudad = scanner.next();
+                    editUsuario.setCiudad(nuevaCiudad);
+                    break;
+                case 5:
+                    System.out.print("Ingrese la nueva contraseña: ");
+                    String nuevaContrasena = scanner.next();
+                    editUsuario.setContrasena(nuevaContrasena);
+                    break;
+                case 6:
+                    System.out.print("Ingrese el nuevo rol: ");
+                    String nuevoRol = scanner.next();
+                    editUsuario.setRol(nuevoRol);
+                    break;
+                case 7:
+                    System.out.println("Ingresa el num de celular: ");
+                    int nuevoNumCelular = scanner.nextInt();
+                    editUsuario.setNumCelular(nuevoNumCelular);
+                    break;
+                default:
+                    System.out.println("Opcion invalida (1 - 7)");
+
+            }
+            usuarioDAO.update(editUsuario);
+            System.out.println("Usuario editado correctamente! ");
+        } System.out.println("Usuario no encontrado");
+    }
+
+    public static void eliminarUsuario (Scanner scanner){
+        System.out.println("Ingresa el ID del usuario a eliminar: ");
+        Long idUsuario = scanner.nextLong();
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        Usuario usuarioAEliminar = usuarioDAO.findById(idUsuario);
+        if (usuarioAEliminar != null) {
+            usuarioDAO.delete(usuarioAEliminar);
+            System.out.println("Usuario eliminado correctamente.");
+        } else {
+            System.out.println("No se encontró un usuario con ese ID.");
+        }
 
     }
 
