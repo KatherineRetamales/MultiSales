@@ -3,7 +3,6 @@ import org.example.dao.PedidoDAO;
 import org.example.dao.UsuarioDAO;
 import org.example.models.Pedido;
 import org.example.models.Usuario;
-
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,9 +10,7 @@ import java.util.Scanner;
  * Hello world!
  *
  */
-public class App 
-
-{
+public class App {
     public static void main( String[] args )
     {
         Scanner scanner = new Scanner(System.in);
@@ -77,7 +74,7 @@ public class App
             switch (opcion) {
                 case 1:
                     // Lógica para agregar usuario
-                    System.out.println("Usuario agregado");
+                    agregarUsuario(scanner);
                     break;
                 case 2:
                     // Lógica para editar usuario
@@ -131,6 +128,37 @@ public class App
                     System.out.println("Opción no válida. Por favor, selecciona una opción válida.");
             }
         }
+
+    }
+
+    private static void agregarUsuario(Scanner scanner) {
+        String nombre = ObtenerInfoUsuario("Ingrese el nombre del usuario: ", scanner);
+        String apellido = ObtenerInfoUsuario("Ingrese el apellido del usuario: ", scanner);
+        String direccion = ObtenerInfoUsuario("Ingrese la dirección del usuario: ", scanner);
+        String ciudad = ObtenerInfoUsuario("Ingrese la ciudad del usuario: ", scanner);
+        String email = ObtenerInfoUsuario("Ingrese el correo electrónico del usuario: ", scanner);
+        String contrasena = ObtenerInfoUsuario("Ingrese la contraseña del usuario: ", scanner);
+        String rol = ObtenerInfoUsuario("Ingrese el rol del usuario: ", scanner);
+        int numCelular = ObtenerNumUsuario("Ingrese el número de celular del usuario: ", scanner);
+
+        Usuario nuevoUsuario = new Usuario(nombre, apellido, direccion, ciudad, email, contrasena, rol, numCelular);
+
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        usuarioDAO.insert(nuevoUsuario);
+
+        System.out.println("Usuario agregado con éxito.");
+    }
+
+    private static String ObtenerInfoUsuario(String mensaje, Scanner scanner) {
+        System.out.print(mensaje);
+        scanner.nextLine();
+        return scanner.next();
+    }
+
+    private static int ObtenerNumUsuario(String mensaje, Scanner scanner) {
+        System.out.print(mensaje);
+        scanner.nextLine();
+        return scanner.nextInt();
 
     }
 

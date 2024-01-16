@@ -68,13 +68,13 @@ public class UsuarioDAO {
             return null;
         }
     }
-    public  void insert(Usuario Usuario){
+    public void insert(Usuario usuario) {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction transaction = session.beginTransaction();
-            session.save(Usuario);
+            session.save(usuario);
             transaction.commit();
-        } catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
