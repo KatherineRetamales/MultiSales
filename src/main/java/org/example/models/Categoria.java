@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -19,6 +20,22 @@ public class Categoria {
 
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Producto> productos = new ArrayList<>();
+
+    public Categoria() {
+    }
+
+    public static void editarCategoria() {
+    }
+
+
+    public static void deleteCategoria() {
+    }
+
+    public static void agregarCategoria() {
+    }
+
+    public static void verTodasCategorias() {
+    }
 
     public List<Producto> getProductos() {
         return productos;
@@ -68,5 +85,13 @@ public class Categoria {
     }
 
 
+    public void setCategoria(String perfumeria) {
+    }
+
+    public void setName(String perfumeria) {
+    }
+
+    public void setFecha(Date date) {
+    }
 }
 
