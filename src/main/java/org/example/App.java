@@ -352,6 +352,11 @@ public class App {
                     break;
                 case 2:
                     //Logica para pagar
+                    // Realizar el pago en efectivo
+                    if (Pedido.realizarPago()) {
+                        // Generar la boleta si el pago fue exitoso
+                        Pedido.generarBoleta();
+                    }
                     break;
                 case 3:
                     // Lógica para volver al menu principal
