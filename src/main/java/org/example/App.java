@@ -1,7 +1,10 @@
 package org.example;
+import org.example.dao.CategoriaDAO;
 import org.example.dao.PedidoDAO;
 import org.example.dao.UsuarioDAO;
+import org.example.models.Categoria;
 import org.example.models.Pedido;
+import org.example.models.Producto;
 import org.example.models.Usuario;
 import java.util.List;
 import java.util.Scanner;
@@ -71,6 +74,7 @@ public class App {
 
             int opcion = scanner.nextInt();
 
+
             switch (opcion) {
                 case 1:
                     // Lógica para agregar usuario
@@ -104,21 +108,41 @@ public class App {
                     // Lógica para ver todos los productos
                     System.out.println("Producto eliminado");
                     break;
+
                 case 9:
+
                     // Lógica para agregar categoria
-                    System.out.println("Categoria agregada");
+                    System.out.println("\n¿Desea agregar una categoria?");
+                    System.out.println("1. Sí");
+                    System.out.println("2. No");
+                    Categoria nuevaCategoria = new Categoria();
+                    Categoria.agregarCategoria();
+
+
                     break;
                 case 10:
                     // Lógica para editar categoria
-                    System.out.println("Categoria editada");
+                    System.out.println("\n¿Desea editar una categoria?");
+                    System.out.println("1. Sí");
+                    System.out.println("2. No");
+                    Categoria.editarCategoria();
+
                     break;
                 case 11:
                     // Lógica para eliminar categoria
-                    System.out.println("Categoria eliminada");
+                    System.out.println("\n¿Desea eliminar una categoria?");
+                    System.out.println("1. Sí");
+                    System.out.println("2. No");
+                    Categoria.deleteCategoria();
+
                     break;
+
                 case 12:
-                    // Lógica para ver todos los productos
-                    System.out.println("Producto eliminado");
+                    // Lógica para ver todas las categorias
+                    System.out.println("\n¿Desea ver todas las categorias?");
+                    System.out.println("1. Sí");
+                    System.out.println("2. No");
+                    Categoria.verTodasCategorias();
                     break;
                 case 13:
                     System.out.println("Cerrando sesión. ¡Hasta luego!");

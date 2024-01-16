@@ -10,7 +10,11 @@ import java.util.List;
 public class CategoriaDAO {
 
 
-    public Categoria findById(Long id){
+
+    public static void addCategoriaToMenu(long id, Object nuevaCategoria) {
+    }
+
+    public static Categoria findById(Long id){
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             return session.get(Categoria.class, 1l);
@@ -40,7 +44,7 @@ public class CategoriaDAO {
         }
     }
 
-    public  void insert(Categoria categoria){
+    public static void insert(Categoria categoria){
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction transaction = session.beginTransaction();
@@ -51,7 +55,7 @@ public class CategoriaDAO {
         }
     }
 
-    public void update(Categoria categoria){
+    public static void update(Categoria categoria){
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction transaction = session.beginTransaction();
@@ -61,7 +65,7 @@ public class CategoriaDAO {
             ex.printStackTrace();
         }
     }
-    public void delete(Categoria categoria) {
+    public static void delete(Categoria categoria) {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction transaction = session.beginTransaction();
@@ -72,4 +76,5 @@ public class CategoriaDAO {
         }
 
     }
+
 }
