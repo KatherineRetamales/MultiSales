@@ -3,7 +3,6 @@ import org.example.dao.PedidoDAO;
 import org.example.dao.UsuarioDAO;
 import org.example.models.Pedido;
 import org.example.models.Usuario;
-
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,9 +10,7 @@ import java.util.Scanner;
  * Hello world!
  *
  */
-public class App 
-
-{
+public class App {
     public static void main( String[] args )
     {
         Scanner scanner = new Scanner(System.in);
