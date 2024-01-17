@@ -62,7 +62,7 @@ public class CategoriaDAO {
         }
     }
 
-    public void update(Categoria categoria){
+    public static void update(CategoriaDAO categoria){
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction transaction = session.beginTransaction();
@@ -108,4 +108,9 @@ public class CategoriaDAO {
     }
 
 
+    public void setNombre(String nombreEditado) {
+    }
+
+    public void setDescripcion(String descripcionEditada) {
+    }
 }
