@@ -130,6 +130,7 @@ public class App {
                     break;
                 case 8:
                     // Lógica para ver todos los productos
+                    mostrarProducto();
                     System.out.println("Ver todos los Producto");
                     break;
 
@@ -574,12 +575,12 @@ private static void mostrarUsuarios() {
         Long idProducto = scanner.nextLong();
         ProductoDAO productoDAO = new ProductoDAO();
         Producto producto = productoDAO.findById(idProducto);
-        System.out.println("¿Que dato del profucto desea editar?");
+        System.out.println("¿Que dato del producto desea editar?");
         System.out.println("1. Editar nombre");
         System.out.println("2. Editar el stock");
         System.out.println("3. Editar la descripcion");
         System.out.println("4. Editar el precio");
-        System.out.println("5. Ver sus datos personales");
+        System.out.println("5. Ver productos");
         System.out.println("6. Volver");
         System.out.print("Seleccione una opción: ");
 
@@ -644,7 +645,7 @@ private static void mostrarUsuarios() {
         List<Producto> productos = productoDAO.findAll();
 
         if (productos != null && !productos.isEmpty()) {
-            System.out.println("\nLista de usuarios:");
+            System.out.println("\nLista de productos:");
             for (Producto producto : productos) {
                 System.out.println("ID: " + producto.getIdProducto());
                 System.out.println("Nombre: " + producto.getNombreProducto());
@@ -683,15 +684,15 @@ private static void mostrarUsuarios() {
 
 
     public static void   eliminarCategoria (Scanner scanner) {
-        System.out.println("Ingresa el ID de la categoria a eliminar: ");
+        System.out.println("Ingresa el ID de la categoría a eliminar: ");
         Long idCategoria = scanner.nextLong();
         CategoriaDAO categoriaDAO = new CategoriaDAO();
         Categoria categoriaAEliminar = categoriaDAO.findById(idCategoria);
         if (categoriaAEliminar != null) {
             categoriaDAO.delete(categoriaAEliminar);
-            System.out.println("Usuario eliminado correctamente.");
+            System.out.println("Categoría eliminado correctamente.");
         } else {
-            System.out.println("No se encontró un usuario con ese ID.");
+            System.out.println("No se encontró una categoría con ese ID.");
         }
     }
 
