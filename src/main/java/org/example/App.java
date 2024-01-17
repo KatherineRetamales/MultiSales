@@ -156,9 +156,10 @@ public class App {
 
                     break;
                 case 11:
+
                     // Lógica para eliminar categoria
-                    Categoria categoria = new Categoria();
-                    categoria.deleteCategoria(scanner);
+
+                    eliminarCategoria(scanner);
 
 
 
@@ -601,6 +602,19 @@ private static void mostrarUsuarios() {
         }
     }
 
+
+    public static void   eliminarCategoria (Scanner scanner) {
+        System.out.println("Ingresa el ID de la categoria a eliminar: ");
+        Long idCategoria = scanner.nextLong();
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
+        Categoria categoriaAEliminar = categoriaDAO.findById(idCategoria);
+        if (categoriaAEliminar != null) {
+            categoriaDAO.delete(categoriaAEliminar);
+            System.out.println("Usuario eliminado correctamente.");
+        } else {
+            System.out.println("No se encontró un usuario con ese ID.");
+        }
+    }
 
 
 }
