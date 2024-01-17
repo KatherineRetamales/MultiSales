@@ -38,7 +38,7 @@ Historial y Perfil:
 Ver Mis Compras: Proporciona un historial de las compras realizadas.
 Editar Datos Personales: Permite al cliente actualizar su información personal.
 ## Ejecución del Sistema
-Clona el repositorio: https://github.com/KatherineRetamales/MultiSales.git
-Abre el proyecto en tu entorno de desarrollo Java.
-Ejecuta la clase principal Main.java.
-Sigue las instrucciones en la consola para navegar por el sistema.
+* Clona el repositorio: https://github.com/KatherineRetamales/MultiSales.git
+* Abre el proyecto en tu entorno de desarrollo Java.
+* Ejecuta la clase principal Main.java.
+* Sigue las instrucciones en la consola para navegar por el sistema.
