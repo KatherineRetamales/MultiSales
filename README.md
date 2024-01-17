@@ -37,9 +37,8 @@ Historial y Perfil:
 
 Ver Mis Compras: Proporciona un historial de las compras realizadas.
 Editar Datos Personales: Permite al cliente actualizar su información personal.
-Ejecución del Sistema
-Clona el repositorio: git clone https://github.com/tuusuario/sistema-gestion-java.git
+## Ejecución del Sistema
+Clona el repositorio: https://github.com/KatherineRetamales/MultiSales.git
 Abre el proyecto en tu entorno de desarrollo Java.
 Ejecuta la clase principal Main.java.
 Sigue las instrucciones en la consola para navegar por el sistema.
-¡Disfruta utilizando el sistema de gestión! Si tienes alguna pregunta o problema, no dudes en contactarnos.
