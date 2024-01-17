@@ -14,27 +14,18 @@ Este es un sistema desarrollado en Java que permite la gestión de usuarios con 
   * Editar Producto: Modifica la información de un producto existente.
   * Eliminar Producto: Elimina un producto del inventario.
 * Gestión de Categorías:
-
-Ver Categorías: Lista las categorías disponibles.
-Agregar Categoría: Crea una nueva categoría.
-Editar Categoría: Modifica la información de una categoría existente.
-Eliminar Categoría: Elimina una categoría del sistema.
+  * Ver Categorías: Lista las categorías disponibles.
+  * Agregar Categoría: Crea una nueva categoría.
+  * Editar Categoría: Modifica la información de una categoría existente.
+  * Eliminar Categoría: Elimina una categoría del sistema.
 ### Menú Cliente
-Visualización de Productos:
-
-Ver Productos: Permite al cliente explorar la lista de productos disponibles.
-Carrito de Compras:
-
-Agregar Producto al Carrito: Añade productos al carrito de compras.
-Eliminar Producto del Carrito: Retira productos del carrito.
-Proceso de Compra:
-
-Ver Carrito: Muestra el contenido actual del carrito.
-Pagar: Realiza el proceso de pago y finaliza la transacción.
-Historial y Perfil:
-
-Ver Mis Compras: Proporciona un historial de las compras realizadas.
-Editar Datos Personales: Permite al cliente actualizar su información personal.
+* Ver Productos: Permite al cliente explorar la lista de productos disponibles.
+* Agregar Producto al Carrito: Añade productos al carrito de compras.
+* Eliminar Producto del Carrito: Retira productos del carrito.
+* Ver Carrito: Muestra el contenido actual del carrito.
+* Pagar: Realiza el proceso de pago y finaliza la transacción.
+* Ver Mis Compras: Proporciona un historial de las compras realizadas.
+* Editar Datos Personales: Permite al cliente actualizar su información personal.
 ## Ejecución del Sistema
 * Clona el repositorio: https://github.com/KatherineRetamales/MultiSales.git
 * Abre el proyecto en tu entorno de desarrollo Java.
