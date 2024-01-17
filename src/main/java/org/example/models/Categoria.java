@@ -94,21 +94,7 @@ public class Categoria {
         productos.add(producto);
         producto.setCategoria(this);
     }
-
-    public  void deleteCategoria (Scanner scanner){
-        System.out.println("Ingresa el ID de la Categoria a eliminar: ");
-        Long idCategoria = scanner.nextLong();
-        CategoriaDAO categoriaDAO = new CategoriaDAO();
-        Categoria categoriaAEliminar = categoriaDAO.findById(idCategoria);
-        if (categoriaAEliminar != null) {
-            categoriaDAO.delete(categoriaAEliminar);
-            System.out.println("Categoria eliminada correctamente.");
-        } else {
-            System.out.println("No se encontró una categoria con ese ID.");
-        }
-
-    }
-
+    
     public void editarCategoria(Scanner scanner) {
         System.out.println("Ingresa el ID de la Categoria a editar: ");
         Long idCategoria = scanner.nextLong();
