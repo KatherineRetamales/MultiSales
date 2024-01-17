@@ -1,5 +1,7 @@
 package org.example.dao;
 
+import org.example.models.Pedido;
+import org.example.models.Pedido_Producto;
 import org.example.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -69,5 +71,16 @@ public class Pedido_ProductoDAO {
             ex.printStackTrace();
         }
     }
+
+    public List<Pedido_Producto> findByIdPedido(Long idPedido){
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            return session.createQuery("FROM Pedido_Producto WHERE idPedido='"+idPedido+"' ").list();
+        } catch (Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
 
 }

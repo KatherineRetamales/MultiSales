@@ -1,16 +1,11 @@
 package org.example;
-import org.example.dao.CategoriaDAO;
+import org.example.dao.*;
 
-import org.example.dao.PedidoDAO;
-import org.example.dao.ProductoDAO;
-import org.example.dao.UsuarioDAO;
-import org.example.models.Categoria;
-import org.example.models.Pedido;
-import org.example.models.Producto;
-import org.example.models.Usuario;
+import org.example.models.*;
 
 
-
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -79,11 +74,9 @@ public class App {
 
             switch (opcion) {
                 case 1:
-
                     agregarUsuario(scanner);
                     break;
                 case 2:
-
                     editarUsuario(scanner);
                     break;
                 case 3:
@@ -94,10 +87,8 @@ public class App {
                     System.out.println("Ver todos los usuarios");
                     break;
                 case 5:
-
-
                     // Lógica para agregar producto
-                    agregarProducto(scanner,productoDAO);
+                    agregarProducto(scanner);
                     System.out.println("Producto agregado");
                     break;
                 case 6:
@@ -110,17 +101,21 @@ public class App {
                     break;
                 case 8:
                     // Lógica para ver todos los productos
-                    System.out.println("Producto eliminado");
+                    System.out.println("Ver todos los Producto");
                     break;
 
                 case 9:
 
                     // Lógica para agregar categoria
-                    System.out.println("\n¿Desea agregar una categoria?");
-                    System.out.println("1. Sí");
-                    System.out.println("2. No");
-                    Categoria nuevaCategoria = new Categoria();
-                    Categoria.agregarCategoria();
+                    System.out.println("Ingresa el nombre de la categoria");
+                    String nombreCategoria = scanner.next();
+
+                    System.out.println("Ingresa la descripcion de la categoria");
+                    String descripcionCategoria = scanner.next();
+
+                    Categoria nuevaCategoria = new Categoria(nombreCategoria,descripcionCategoria);
+                    CategoriaDAO categoriaDAO = new CategoriaDAO();
+                    categoriaDAO.insert(nuevaCategoria);
 
 
                     break;
@@ -270,34 +265,78 @@ public class App {
 
     private static void menuCliente(Scanner scanner, Long idUsuario) {
         PedidoDAO pedidoDAO = new PedidoDAO();
+        ProductoDAO productoDAO = new ProductoDAO();
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        Carrito carrito = new Carrito();
+
+        Usuario usuario = new Usuario();
         while (true) {
             System.out.println("\nUsted está en el menu de Cliente. ¿Qué desea hacer?");
             System.out.println("1. Ver productos.");
-            System.out.println("2. Ver carrito de compras");
-            System.out.println("3. Ver mis compras");
-            System.out.println("4. Datos personales");
-            System.out.println("5. Cerrar sesión");
+            System.out.println("2. Agregar producto.");
+            System.out.println("3. Ver carrito de compras.");
+            System.out.println("4. Eliminar producto.");
+            System.out.println("5. Pagar.");
+            System.out.println("6. Ver mis compras");
+            System.out.println("7. Editar datos personales");
+            System.out.println("8. Cerrar sesión");
 
             int opcion = scanner.nextInt();
 
             switch (opcion) {
                 case 1:
                     // Lógica para ver productos
-                    menuVerproductos(scanner, idUsuario);
+                    listarProductos(productoDAO);
                     break;
                 case 2:
-                    // Lógica para ver carrito de compras
-                    menuCarritoCompras(scanner, idUsuario);
+                    // Lógica para agregar producto al carrito de compras
+                    System.out.print("Ingrese el ID del producto que quiere agregar: ");
+                    Long idProductoAgregar = scanner.nextLong();
+                    Producto productoAgregar = productoDAO.findById(idProductoAgregar);
+                    carrito.agregarProducto(productoAgregar);
                     break;
                 case 3:
+                    // Lógica para mostrar carrito de compras
+                    carrito.mostrarCarrito();
+                    break;
+                case 4:
+                    // Lógica para eliminar un producto del carrito de compras
+                    System.out.print("Ingrese el ID del producto a eliminar del carrito: ");
+                    Long idProductoEliminar = scanner.nextLong();
+                    Producto productoEliminar = productoDAO.findById(idProductoEliminar);
+                    carrito.eliminarProducto(productoEliminar);
+                    break;
+                case 5:
+                    // Lógica para pagar lo que esta en el carrito de compras
+                    // Crear un nuevo pedido
+                    Pedido nuevoPedido = new Pedido("Efectivo", 2, carrito.getProductos().size(), new Date(), carrito.getTotal());
+                    System.out.print("Metodo pago" + nuevoPedido.getMetodoPago());
+                    System.out.print("Cantidad" + nuevoPedido.getCantidadProducto());
+                    System.out.print("Total" + nuevoPedido.getTotalCompra());
+
+                    usuarioDAO.addPedido(idUsuario, nuevoPedido);
+
+                    // Iterar sobre los productos en el carrito
+                    for (Producto producto : carrito.getProductos()) {
+                        // Crear una relación PedidoProducto
+                        Pedido_Producto pedido_producto = new Pedido_Producto();
+                        // Añadir la relación PedidoProducto a la base de datos
+                        pedidoDAO.addPedidoProducto(nuevoPedido.getIdPedido(), pedido_producto);
+
+                        // Añadir la relación PedidoProducto al Producto
+                        productoDAO.addPedidoProducto(producto.getIdProducto(), pedido_producto);
+
+                    }
+                    break;
+                case 6:
                     // Lógica para ver compras
                     verComprasUsuario(idUsuario, pedidoDAO);
                     break;
-                case 4:
+                case 7:
                     // Lógica para editar perfil
                     editarDatosPersonales(scanner, idUsuario);
                     break;
-                case 5:
+                case 8:
                     System.out.println("Cerrando sesión. ¡Hasta luego!");
                     System.exit(0);
                     break;
@@ -306,73 +345,6 @@ public class App {
             }
         }
     }
-
-    private static void menuVerproductos(Scanner scanner, Long idUsuario){
-        while (true) {
-            System.out.println("\nProductos:");
-            System.out.println("1. Agregar al carrito de compras.");
-            System.out.println("2. Ver carrito de compras");
-            System.out.println("3. Filtrar productos por categoría.");
-            System.out.println("4. Volver al menu principal");;
-
-            int opcion = scanner.nextInt();
-
-            switch (opcion) {
-                case 1:
-                    // Lógica para agregar al carrito de compras
-                    break;
-                case 2:
-                    menuCarritoCompras(scanner, idUsuario);
-                    break;
-                case 3:
-                    // Lógica para volver al menu principal
-                    menuCliente(scanner, idUsuario);
-                    break;
-                case 4:
-                    // Lógica para filtrar productos por categoria
-                    break;
-                default:
-                    System.out.println("Opción no válida. Por favor, selecciona una opción válida.");
-            }
-        }
-    }
-
-    private static void menuCarritoCompras(Scanner scanner, Long idUsuario){
-        while (true) {
-            System.out.println("\nCarrito de compras:");
-            System.out.println("1. Eliminar producto.");
-            System.out.println("2. Pagar");
-            System.out.println("3. Volver al menu principal");
-
-            int opcion = scanner.nextInt();
-
-            Pedido p1 = new Pedido();
-
-            switch (opcion) {
-                case 1:
-                    // Lógica para eliminar producto del carrito de compras
-                    break;
-                case 2:
-                    //Logica para pagar
-                    // Realizar el pago en efectivo
-                    /*NO FUNCIONA
-                    if (Pedido.realizarPago()) {
-                        // Generar la boleta si el pago fue exitoso
-                       Pedido.generarBoleta();
-                    }
-
-                     */
-                    break;
-                case 3:
-                    // Lógica para volver al menu principal
-                    menuCliente(scanner, idUsuario);
-                    break;
-                default:
-                    System.out.println("Opción no válida. Por favor, selecciona una opción válida.");
-            }
-        }
-    }
-
 
     private static void verComprasUsuario(Long idUsuario, PedidoDAO pedidoDAO){
         List<Pedido> pedidos = pedidoDAO.findByIdUsuario(idUsuario);
@@ -388,6 +360,21 @@ public class App {
                 System.out.println("Total compra: " + pedido.getTotalCompra());
                 System.out.println("Método de pago: " + pedido.getMetodoPago());
                 System.out.println("------------------------------");
+                Pedido_ProductoDAO pedidoProductoDAO = new Pedido_ProductoDAO();
+                List<Pedido_Producto> pedido_productos = pedidoProductoDAO.findByIdPedido(pedido.getIdPedido());
+                if (pedido_productos.isEmpty()) {
+                    System.out.println("No hay pedidos.");
+                } else {
+                    System.out.println("Lista de productos por pedido:");
+                    for (Pedido_Producto pedidoProducto : pedido_productos) {
+                        System.out.println("ID Producto: " + pedidoProducto.getProducto().getIdProducto());
+                        System.out.println("Producto: " + pedidoProducto.getProducto().getNombreProducto());
+                        System.out.println("Precio: " + pedidoProducto.getProducto().getPrecio());
+
+                        System.out.println("------------------------------");
+
+                    }
+                }
             }
         }
     }
@@ -463,34 +450,51 @@ public class App {
                 System.out.println("Opción no válida. Inténtelo de nuevo.");
         }
     }
-    public static void agregarProducto (Scanner scanner, ProductoDAO productoDAO) {
+
+    public static void agregarProducto (Scanner scanner) {
 
         System.out.println("Ingresa el nombre del Producto");
         String nombreDelProducto = scanner.next();
-        Producto productoNuevo = new Producto();
-        productoNuevo.setNombreProducto(nombreDelProducto);
 
         System.out.println("Ingresa la cantidad del Producto");
         int cantidadDelProducto = scanner.nextInt();
-        Producto cantidadDeProductosIngresados = new Producto();
-        cantidadDeProductosIngresados.setStock(cantidadDelProducto);
 
         System.out.println("Ingresa una descripcion del Producto");
         String descripcionDelProducto = scanner.next();
-        Producto descripcionDelProductoIngresado = new Producto();
-        descripcionDelProductoIngresado.setDescripcionProducto(descripcionDelProducto);
 
         System.out.println("Ingresa el precio del Producto");
-        double precioDelProducto = scanner.nextInt();
-        Producto precioDelProductoIngresado = new Producto();
-        precioDelProductoIngresado.setPrecio(precioDelProducto);
+        double precioDelProducto = scanner.nextDouble();
 
+        System.out.println("Ingresa el ID de la Categoría");
+        Long idCategoria = scanner.nextLong();
 
-        Producto producto = new Producto(nombreDelProducto, cantidadDelProducto, descripcionDelProducto, precioDelProducto);
-        productoDAO.insert(producto);
-
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
+        Producto nuevoProducto = new Producto(nombreDelProducto,cantidadDelProducto,descripcionDelProducto,precioDelProducto);
+        categoriaDAO.addProducto(idCategoria, nuevoProducto);
 
     }
 
+    public static void listarProductos(ProductoDAO productoDAO){
+        try {
+            List<Producto> productos = productoDAO.findAll();
+            if (productos.isEmpty()) {
+                System.out.println("No hay productos.");
+            } else {
+                // Imprime todos los productos
+                System.out.println("Lista de productos:");
+                for (Producto producto : productos) {
+                    System.out.println("ID: " + producto.getIdProducto());
+                    System.out.println("Producto: " + producto.getNombreProducto());
+                    System.out.println("Descripcion: " + producto.getDescripcionProducto());
+                    System.out.println("Precio: " + producto.getPrecio());
+                    System.out.println("Stock: " + producto.getStock());
+                    System.out.println("Categoria: " + producto.getCategoria().getNombre());
+                    System.out.println("------------------------------");
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
 }

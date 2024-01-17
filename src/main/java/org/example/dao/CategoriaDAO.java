@@ -14,7 +14,7 @@ public class CategoriaDAO {
     public static void addCategoriaToMenu(long id, Object nuevaCategoria) {
     }
 
-    public static Categoria findById(Long id){
+    public Categoria findById(Long id){
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             return session.get(Categoria.class, 1l);
@@ -44,7 +44,7 @@ public class CategoriaDAO {
         }
     }
 
-    public static void insert(Categoria categoria){
+    public void insert(Categoria categoria){
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction transaction = session.beginTransaction();
@@ -55,7 +55,7 @@ public class CategoriaDAO {
         }
     }
 
-    public static void update(Categoria categoria){
+    public void update(Categoria categoria){
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction transaction = session.beginTransaction();
@@ -65,7 +65,7 @@ public class CategoriaDAO {
             ex.printStackTrace();
         }
     }
-    public static void delete(Categoria categoria) {
+    public void delete(Categoria categoria) {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction transaction = session.beginTransaction();
@@ -76,5 +76,29 @@ public class CategoriaDAO {
         }
 
     }
+
+    public void addProducto(Long categoriaId, Producto producto) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+
+            // Obtener la categoría
+            Categoria categoria = session.get(Categoria.class, categoriaId);
+            if (categoria != null) {
+                // Asignar categoría al producto
+                categoria.addProducto(producto);
+                // Guardar la actualización
+                session.saveOrUpdate(producto);
+            }
+
+            transaction.commit();
+        } catch (Exception ex) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            ex.printStackTrace();
+        }
+    }
+
 
 }

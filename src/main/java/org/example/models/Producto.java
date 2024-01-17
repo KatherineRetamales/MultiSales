@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 @Entity
@@ -23,16 +24,12 @@ public class Producto {
 
 
     //Relaciones
-    @OneToMany(mappedBy ="producto", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Pedido> pedidos= new ArrayList<>();
-
-
-
-
     @ManyToOne
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Pedido_Producto> pedido_productos = new ArrayList<>();
 
 
     //Constructores
@@ -45,8 +42,6 @@ public class Producto {
         this.descripcionProducto = descripcionProducto;
         this.precio = precio;
     }
-
-
 
     //Getters and setters
     public Long getIdProducto() {
@@ -91,15 +86,6 @@ public class Producto {
 
 
     //getters and setters de las relaciones
-    public List<Pedido> getPedidos() {
-        return pedidos;
-    }
-
-    public void setPedidos(List<Pedido> pedidos) {
-        this.pedidos = pedidos;
-    }
-
-
     public Categoria getCategoria() {
         return categoria;
     }
@@ -108,4 +94,38 @@ public class Producto {
         this.categoria = categoria;
     }
 
+    public List<Pedido_Producto> getPedido_productos() {
+        return pedido_productos;
+    }
+
+    public void setPedido_productos(List<Pedido_Producto> pedido_productos) {
+        this.pedido_productos = pedido_productos;
+    }
+
+    @Override
+    public String toString() {
+        return "ID: " + idProducto + " Producto: " + nombreProducto + ", Precio: " + precio; // ajusta según las propiedades de tu Producto
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Producto producto = (Producto) obj;
+        return Objects.equals(idProducto, producto.getIdProducto());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idProducto);
+    }
+
+    public void addProductoProducto(Pedido_Producto pedido_producto) {
+        pedido_productos.add(pedido_producto);
+        pedido_producto.setProducto(this);
+    }
 }
