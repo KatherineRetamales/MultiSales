@@ -11,21 +11,10 @@ public class PedidoDAO {
     public List<Pedido> findByIdUsuario(Long id_usuario){
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
-            return session.createQuery("FROM Pedido P JOIN FETCH P.pedido_producto PP WHERE idUsuario='"+id_usuario+"' GROUP BY PP.idPedido").list();
+            return session.createQuery("FROM Pedido WHERE idUsuario='"+id_usuario+"' ").list();
         } catch (Exception ex){
             ex.printStackTrace();
             return null;
-        }
-    }
-
-    public void insert(Pedido pedido) {
-        try {
-            Session session = HibernateUtil.getSessionFactory().openSession();
-            Transaction transaction = session.beginTransaction();
-            session.save(pedido);
-            transaction.commit();
-        } catch (Exception ex) {
-            ex.printStackTrace();
         }
     }
 

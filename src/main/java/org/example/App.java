@@ -1,9 +1,6 @@
 package org.example;
-import org.example.dao.CategoriaDAO;
+import org.example.dao.*;
 
-import org.example.dao.PedidoDAO;
-import org.example.dao.ProductoDAO;
-import org.example.dao.UsuarioDAO;
 import org.example.models.*;
 
 
@@ -312,8 +309,12 @@ public class App {
                 case 5:
                     // Lógica para pagar lo que esta en el carrito de compras
                     // Crear un nuevo pedido
-                    Pedido nuevoPedido = new Pedido("Efectivo", 1, carrito.getProductos().size(), new Date(), carrito.getTotal());
-                    usuarioDAO.addPedido(usuario.getIdUsuario(), nuevoPedido);
+                    Pedido nuevoPedido = new Pedido("Efectivo", 2, carrito.getProductos().size(), new Date(), carrito.getTotal());
+                    System.out.print("Metodo pago" + nuevoPedido.getMetodoPago());
+                    System.out.print("Cantidad" + nuevoPedido.getCantidadProducto());
+                    System.out.print("Total" + nuevoPedido.getTotalCompra());
+
+                    usuarioDAO.addPedido(idUsuario, nuevoPedido);
 
                     // Iterar sobre los productos en el carrito
                     for (Producto producto : carrito.getProductos()) {
@@ -326,7 +327,6 @@ public class App {
                         productoDAO.addPedidoProducto(producto.getIdProducto(), pedido_producto);
 
                     }
-
                     break;
                 case 6:
                     // Lógica para ver compras
@@ -360,6 +360,21 @@ public class App {
                 System.out.println("Total compra: " + pedido.getTotalCompra());
                 System.out.println("Método de pago: " + pedido.getMetodoPago());
                 System.out.println("------------------------------");
+                Pedido_ProductoDAO pedidoProductoDAO = new Pedido_ProductoDAO();
+                List<Pedido_Producto> pedido_productos = pedidoProductoDAO.findByIdPedido(pedido.getIdPedido());
+                if (pedido_productos.isEmpty()) {
+                    System.out.println("No hay pedidos.");
+                } else {
+                    System.out.println("Lista de productos por pedido:");
+                    for (Pedido_Producto pedidoProducto : pedido_productos) {
+                        System.out.println("ID Producto: " + pedidoProducto.getProducto().getIdProducto());
+                        System.out.println("Producto: " + pedidoProducto.getProducto().getNombreProducto());
+                        System.out.println("Precio: " + pedidoProducto.getProducto().getPrecio());
+
+                        System.out.println("------------------------------");
+
+                    }
+                }
             }
         }
     }
