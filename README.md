@@ -1,8 +1,8 @@
-Sistema de Gestión de Usuarios y Productos
+# Sistema de Gestión de Usuarios y Productos
 Este es un sistema desarrollado en Java que permite la gestión de usuarios con roles, así como la administración de productos y categorías. Los usuarios pueden tener roles de administrador o cliente, cada uno con sus respectivos privilegios.
 
-Funcionalidades
-Menú Admin
+## Funcionalidades
+### Menú Admin
 Gestión de Usuarios:
 
 Ver Usuarios: Visualiza la lista de usuarios registrados.
@@ -21,7 +21,7 @@ Ver Categorías: Lista las categorías disponibles.
 Agregar Categoría: Crea una nueva categoría.
 Editar Categoría: Modifica la información de una categoría existente.
 Eliminar Categoría: Elimina una categoría del sistema.
-Menú Cliente
+### Menú Cliente
 Visualización de Productos:
 
 Ver Productos: Permite al cliente explorar la lista de productos disponibles.
