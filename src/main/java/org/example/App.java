@@ -162,10 +162,7 @@ public class App {
                 case 12:
                     // Lógica para ver todas las categorias
                     categoriaDAO = new CategoriaDAO();
-
                     Categoria.verCategorias(scanner, categoriaDAO);
-
-
                     break;
                 case 13:
                     System.out.println("Cerrando sesión. ¡Hasta luego!");
