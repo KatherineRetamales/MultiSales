@@ -1,6 +1,7 @@
 package org.example.dao;
 import org.example.models.Categoria;
 import org.example.models.Producto;
+import org.example.models.Usuario;
 import org.example.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -14,13 +15,19 @@ public class CategoriaDAO {
     public static void addCategoriaToMenu(long id, Object nuevaCategoria) {
     }
 
+
+
+
     public Categoria findById(Long id){
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
-            return session.get(Categoria.class, 1l);
+            Categoria categoria = session.get(Categoria.class, id);
+            session.close();
+            return categoria;
         } catch (Exception ex){
             ex.printStackTrace();
             return null;
+
         }
     }
 
@@ -101,4 +108,9 @@ public class CategoriaDAO {
     }
 
 
+    public void setNombre(String nombreEditado) {
+    }
+
+    public void setDescripcion(String descripcionEditada) {
+    }
 }

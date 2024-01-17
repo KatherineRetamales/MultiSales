@@ -25,8 +25,6 @@ public class Categoria {
     public Categoria() {
     }
 
-    public static void editarCategoria() {
-    }
 
 
     public static void deleteCategoria() {
@@ -96,21 +94,62 @@ public class Categoria {
         productos.add(producto);
         producto.setCategoria(this);
     }
-
-    public  void deleteCategoria (Scanner scanner){
-        System.out.println("Ingresa el ID de la Categoria a eliminar: ");
+    
+    public void editarCategoria(Scanner scanner) {
+        System.out.println("Ingresa el ID de la Categoria a editar: ");
         Long idCategoria = scanner.nextLong();
-        CategoriaDAO categoriaDAO = new CategoriaDAO();
-        Categoria categoriaAEliminar = categoriaDAO.findById(idCategoria);
-        if (categoriaAEliminar != null) {
-            categoriaDAO.delete(categoriaAEliminar);
-            System.out.println("Categoria eliminada correctamente.");
-        } else {
-            System.out.println("No se encontró una categoria con ese ID.");
-        }
 
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
+        Categoria editarCategoria = categoriaDAO.findById(idCategoria);
+
+        if (editarCategoria != null) {
+            System.out.println("Elige la opción a editar");
+            System.out.println("1. Nombre");
+            System.out.println("2. Descripción");
+            int opcionIngresada = scanner.nextInt();
+
+            switch (opcionIngresada) {
+                case 1:
+                    System.out.println("Ingresa el nuevo nombre");
+                    String nombreEditado = scanner.next();
+                    editarCategoria.setNombre(nombreEditado);
+                    break;
+                case 2:
+                    System.out.println("Ingresa la nueva descripción");
+                    String descripcionEditada = scanner.next();
+                    editarCategoria.setDescripcion(descripcionEditada);
+
+                default:
+                    System.out.println("Opcion invalida (1 - 2)");
+
+            }
+            categoriaDAO.update(editarCategoria);
+            System.out.println("Categoria editada correctamente! ");
+        }
+        System.out.println("Categoria no encontrada");
     }
 
+    //VER CATEGORIAS
+
+    public static void verCategorias(Scanner  scanner, CategoriaDAO categoriaDAO){
+        try {
+            List<Categoria> categorias = categoriaDAO.findAll();
+            if (categorias.isEmpty()) {
+                System.out.println("No hay categorias.");
+            } else {
+                // Imprime todas las categorias
+                System.out.println("Lista de categorias:");
+                for (Categoria categoria : categorias) {
+                    System.out.println("ID: " + categoria.getIdCategoria());
+                    System.out.println("Categoria: " + categoria.getNombre());
+                    System.out.println("Descripcion: " + categoria.getDescripcion());
+                    System.out.println("------------------------------");
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
 
 }

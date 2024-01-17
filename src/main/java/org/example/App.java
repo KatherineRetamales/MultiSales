@@ -18,6 +18,7 @@ import org.example.models.Usuario;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.Callable;
 
 public class App {
     public static void main(String[] args) {
@@ -64,6 +65,7 @@ public class App {
 
     private static void menuAdmin(Scanner scanner) {
        ProductoDAO productoDAO = new ProductoDAO();
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
 
         while (true) {
             System.out.println("\nUsted está en en menu de Admin. ¿Qué desea hacer?:");
@@ -140,35 +142,26 @@ public class App {
                     System.out.println("Ingresa la descripcion de la categoria");
                     String descripcionCategoria = scanner.next();
 
-                    Categoria nuevaCategoria = new Categoria(nombreCategoria,descripcionCategoria);
-                    CategoriaDAO categoriaDAO = new CategoriaDAO();
+                    Categoria nuevaCategoria = new Categoria(nombreCategoria, descripcionCategoria);
+
                     categoriaDAO.insert(nuevaCategoria);
 
 
                     break;
                 case 10:
                     // Lógica para editar categoria
-                    System.out.println("\n¿Desea editar una categoria?");
-                    System.out.println("1. Sí");
-                    System.out.println("2. No");
-                    Categoria.editarCategoria();
+                    Categoria categoria = new Categoria();
+                    categoria.editarCategoria(scanner);
 
                     break;
                 case 11:
                     // Lógica para eliminar categoria
-                    Categoria categoria = new Categoria();
-                    categoria.deleteCategoria(scanner);
-
-
-
+                    eliminarCategoria(scanner);
                     break;
-
                 case 12:
                     // Lógica para ver todas las categorias
-                    System.out.println("\n¿Desea ver todas las categorias?");
-                    System.out.println("1. Sí");
-                    System.out.println("2. No");
-                    Categoria.verTodasCategorias();
+                    categoriaDAO = new CategoriaDAO();
+                    Categoria.verCategorias(scanner, categoriaDAO);
                     break;
                 case 13:
                     System.out.println("Cerrando sesión. ¡Hasta luego!");
@@ -685,6 +678,20 @@ private static void mostrarUsuarios() {
             }
         }catch (Exception e){
             e.printStackTrace();
+        }
+    }
+
+
+    public static void   eliminarCategoria (Scanner scanner) {
+        System.out.println("Ingresa el ID de la categoria a eliminar: ");
+        Long idCategoria = scanner.nextLong();
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
+        Categoria categoriaAEliminar = categoriaDAO.findById(idCategoria);
+        if (categoriaAEliminar != null) {
+            categoriaDAO.delete(categoriaAEliminar);
+            System.out.println("Usuario eliminado correctamente.");
+        } else {
+            System.out.println("No se encontró un usuario con ese ID.");
         }
     }
 
