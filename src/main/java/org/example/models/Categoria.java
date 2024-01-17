@@ -1,10 +1,12 @@
 package org.example.models;
 
+import org.example.dao.CategoriaDAO;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 @Entity
 public class Categoria {
@@ -93,6 +95,20 @@ public class Categoria {
     public void addProducto(Producto producto) {
         productos.add(producto);
         producto.setCategoria(this);
+    }
+
+    public  void deleteCategoria (Scanner scanner){
+        System.out.println("Ingresa el ID de la Categoria a eliminar: ");
+        Long idCategoria = scanner.nextLong();
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
+        Categoria categoriaAEliminar = categoriaDAO.findById(idCategoria);
+        if (categoriaAEliminar != null) {
+            categoriaDAO.delete(categoriaAEliminar);
+            System.out.println("Categoria eliminada correctamente.");
+        } else {
+            System.out.println("No se encontró una categoria con ese ID.");
+        }
+
     }
 
 
