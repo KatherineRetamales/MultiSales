@@ -129,10 +129,10 @@ public class App {
                     break;
                 case 11:
                     // Lógica para eliminar categoria
-                    System.out.println("\n¿Desea eliminar una categoria?");
-                    System.out.println("1. Sí");
-                    System.out.println("2. No");
-                    Categoria.deleteCategoria();
+                    Categoria categoria = new Categoria();
+                    categoria.deleteCategoria(scanner);
+
+
 
                     break;
 
@@ -496,5 +496,7 @@ public class App {
             e.printStackTrace();
         }
     }
+
+
 
 }
