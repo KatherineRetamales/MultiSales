@@ -57,6 +57,9 @@ public class Carrito {
     }
 
 
+    public void eliminarCarrito( ) {
+        productos.clear();
+        setTotal(0);
 
-
+    }
 }
