@@ -100,7 +100,7 @@ public class Categoria {
         Long idCategoria = scanner.nextLong();
 
         CategoriaDAO categoriaDAO = new CategoriaDAO();
-        CategoriaDAO editarCategoria = categoriaDAO;
+        Categoria editarCategoria = categoriaDAO.findById(idCategoria);
 
         if (editarCategoria != null) {
             System.out.println("Elige la opción a editar");
@@ -123,9 +123,10 @@ public class Categoria {
                     System.out.println("Opcion invalida (1 - 2)");
 
             }
-            CategoriaDAO.update(editarCategoria);
+            categoriaDAO.update(editarCategoria);
             System.out.println("Categoria editada correctamente! ");
-        } System.out.println("Categoria no encontrada");
+        }
+        System.out.println("Categoria no encontrada");
     }
 
     //VER CATEGORIAS
