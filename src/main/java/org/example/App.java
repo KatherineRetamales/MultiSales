@@ -1,7 +1,20 @@
 package org.example;
+
 import org.example.dao.*;
 
 import org.example.models.*;
+
+import org.example.dao.CategoriaDAO;
+
+import org.example.dao.PedidoDAO;
+import org.example.dao.ProductoDAO;
+import org.example.dao.UsuarioDAO;
+import org.example.models.Categoria;
+import org.example.models.Pedido;
+import org.example.models.Producto;
+import org.example.models.Usuario;
+import org.hibernate.tool.schema.internal.exec.ScriptTargetOutputToFile;
+
 
 
 import java.util.ArrayList;
@@ -17,7 +30,9 @@ public class App {
 
     private static void menuLogearse(Scanner scanner) {
         // Inicio de sesión
-        System.out.println("Bienvenido al sistema MultiSales.");
+        System.out.println("╔══════════════════════════════╗");
+        System.out.println("║         MultiSales           ║");
+        System.out.println("╚══════════════════════════════╝");
         System.out.print("Ingrese su correo: ");
         String correo = scanner.nextLine();
 
@@ -27,7 +42,7 @@ public class App {
         Usuario usuarioLogueado = loguearse(correo, clave);
 
         if (usuarioLogueado != null) {
-            System.out.println("Inicio de sesión exitoso. ¡Bienvenido, " + usuarioLogueado.getNombreUsuario() + "!");
+            System.out.println("Inicio de sesión exitoso. ¡Bienvenid@, " + usuarioLogueado.getNombreUsuario() );
             switch (usuarioLogueado.getRol()) {
                 case "admin":
                     menuAdmin(scanner);
@@ -55,19 +70,32 @@ public class App {
 
         while (true) {
             System.out.println("\nUsted está en en menu de Admin. ¿Qué desea hacer?:");
+            System.out.println("========================");
+            System.out.println("_______USUARIO________");
+            System.out.println("========================");
             System.out.println("1. Agregar Usuario");
             System.out.println("2. Editar Usuario");
             System.out.println("3. Eliminar Usuario");
             System.out.println("4. Ver Usuarios");
+            System.out.println("========================");
+            System.out.println("_____PRODUCTOS________");
+            System.out.println("========================");
             System.out.println("5. Agregar Producto");
             System.out.println("6. Editar Producto");
             System.out.println("7. Eliminar Producto");
             System.out.println("8. Ver Productos");
+            System.out.println("========================");
+            System.out.println("_______CATEGORIA________");
+            System.out.println("========================");
             System.out.println("9. Agregar Categoría");
             System.out.println("10. Editar Categoría");
             System.out.println("11. Eliminar Categoría");
             System.out.println("12. Ver Categorías");
+            System.out.println("========================");
+            System.out.println("_______SESIÓN________");
+            System.out.println("========================");
             System.out.println("13. Cerrar sesión");
+
 
             int opcion = scanner.nextInt();
 
@@ -83,8 +111,8 @@ public class App {
                     eliminarUsuario(scanner);
                     break;
                 case 4:
-                    // Lógica para ver todos los usuarios
-                    System.out.println("Ver todos los usuarios");
+
+                    mostrarUsuarios();
                     break;
                 case 5:
                     // Lógica para agregar producto
@@ -262,7 +290,25 @@ public class App {
         }
 
     }
+//Mostrar Usuarios
+private static void mostrarUsuarios() {
+    UsuarioDAO usuarioDAO = new UsuarioDAO();
+    List<Usuario> usuarios = usuarioDAO.findAll();
 
+    if (usuarios != null && !usuarios.isEmpty()) {
+        System.out.println("\nLista de usuarios:");
+        for (Usuario usuario : usuarios) {
+            System.out.println("ID: " + usuario.getIdUsuario());
+            System.out.println("Nombre: " + usuario.getNombreUsuario());
+            System.out.println("Apellido: " + usuario.getApellidoUsuario());
+            System.out.println("Correo: " + usuario.getEmail());
+            System.out.println("Rol: " + usuario.getRol());
+            System.out.println("------------------------------");
+        }
+    } else {
+        System.out.println("No se encontraron usuarios.");
+    }
+}
     private static void menuCliente(Scanner scanner, Long idUsuario) {
         PedidoDAO pedidoDAO = new PedidoDAO();
         ProductoDAO productoDAO = new ProductoDAO();
@@ -339,6 +385,64 @@ public class App {
                 case 8:
                     System.out.println("Cerrando sesión. ¡Hasta luego!");
                     System.exit(0);
+                    break;
+                default:
+                    System.out.println("Opción no válida. Por favor, selecciona una opción válida.");
+            }
+        }
+    }
+
+    private static void menuVerproductos(Scanner scanner, Long idUsuario){
+        while (true) {
+            System.out.println("\nProductos:");
+            System.out.println("1. Agregar al carrito de compras.");
+            System.out.println("2. Ver carrito de compras");
+            System.out.println("3. Filtrar productos por categoría.");
+            System.out.println("4. Volver al menu principal");;
+
+            int opcion = scanner.nextInt();
+
+            switch (opcion) {
+                case 1:
+                    // Lógica para agregar al carrito de compras
+                    break;
+                case 2:
+                    menuCarritoCompras(scanner, idUsuario);
+                    break;
+                case 3:
+                    // Lógica para volver al menu principal
+                    menuCliente(scanner, idUsuario);
+                    break;
+                case 4:
+                    // Lógica para filtrar productos por categoria
+                    break;
+                default:
+                    System.out.println("Opción no válida. Por favor, selecciona una opción válida.");
+            }
+        }
+    }
+
+    private static void menuCarritoCompras(Scanner scanner, Long idUsuario){
+        while (true) {
+            System.out.println("\nCarrito de compras:");
+            System.out.println("1. Eliminar producto.");
+            System.out.println("2. Pagar");
+            System.out.println("3. Volver al menu principal");
+
+            int opcion = scanner.nextInt();
+
+            Pedido p1 = new Pedido();
+
+            switch (opcion) {
+                case 1:
+                    // Lógica para eliminar producto del carrito de compras
+                    break;
+                case 2:
+                //  pagarProductos();
+                    break;
+                case 3:
+                    // Lógica para volver al menu principal
+                    menuCliente(scanner, idUsuario);
                     break;
                 default:
                     System.out.println("Opción no válida. Por favor, selecciona una opción válida.");
