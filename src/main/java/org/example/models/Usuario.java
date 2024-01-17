@@ -3,7 +3,9 @@ package org.example.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Usuario {
@@ -15,8 +17,8 @@ public class Usuario {
     private int numCelular;
 
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private List<Pedido> pedidos;
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Pedido> pedidos = new ArrayList<>();
 
     //contructor
 
@@ -29,6 +31,7 @@ public class Usuario {
     this.apellidoUsuario = apellidoUsuario;
     this.direccion = direccion;
     this.ciudad = ciudad;
+    this.email = email;
     this.contrasena = contrasena;
     this.rol = rol;
     this.numCelular  = numCelular;
@@ -105,6 +108,37 @@ public class Usuario {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public List<Pedido> getPedido() {
+        return pedidos;
+    }
+
+    public void setPedido(List<Pedido> pedido) {
+        this.pedidos = pedido;
+    }
+
+    public void addPedido(Pedido pedido) {
+        pedidos.add(pedido);
+        pedido.setUsuario(this);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Usuario usuario = (Usuario) obj;
+        return Objects.equals(idUsuario, usuario.getIdUsuario());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idUsuario);
+    }
+
 }
 
 

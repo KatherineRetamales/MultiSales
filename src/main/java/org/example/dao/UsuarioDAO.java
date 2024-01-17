@@ -1,6 +1,9 @@
 package org.example.dao;
 
 
+import org.example.models.Categoria;
+import org.example.models.Pedido;
+import org.example.models.Producto;
 import org.example.models.Usuario;
 import org.example.util.HibernateUtil;
 import org.hibernate.Session;
@@ -100,6 +103,29 @@ public class UsuarioDAO {
             session.delete(Usuario);
             transaction.commit();
         } catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    public void addPedido(Long usuarioId, Pedido pedido) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+
+            // Obtener usuario
+            Usuario usuario = session.get(Usuario.class, usuarioId);
+            if (usuario != null) {
+                // Asignar pedido a usuario
+                usuario.addPedido(pedido);
+                // Guardar la actualización
+                session.saveOrUpdate(pedido);
+            }
+
+            transaction.commit();
+        } catch (Exception ex) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
             ex.printStackTrace();
         }
     }

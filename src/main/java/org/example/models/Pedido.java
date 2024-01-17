@@ -3,7 +3,9 @@ package org.example.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Pedido {
@@ -22,13 +24,11 @@ public class Pedido {
     private Date fechaCompra;
     private double totalCompra;
 
-    @ManyToOne
-    @JoinColumn(name = "producto_id")
-    private Producto producto;
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Pedido_Producto> pedido_productos = new ArrayList<>();
 
     public Pedido() {}
-    public Pedido(Long idPedido, String metodoPago, Integer idEnvio, int cantidadProducto, Date fechaCompra, double totalCompra) {
-        this.idPedido = idPedido;
+    public Pedido(String metodoPago, Integer idEnvio, int cantidadProducto, Date fechaCompra, double totalCompra) {
         this.metodoPago = metodoPago;
         this.idEnvio = idEnvio;
         this.cantidadProducto = cantidadProducto;
@@ -100,11 +100,16 @@ public class Pedido {
         this.totalCompra = totalCompra;
     }
 
-    public Producto getProducto() {
-        return producto;
+    public List<Pedido_Producto> getPedido_productos() {
+        return pedido_productos;
     }
 
-    public void setProducto(Producto producto) {
-        this.producto = producto;
+    public void setPedido_productos(List<Pedido_Producto> pedido_productos) {
+        this.pedido_productos = pedido_productos;
+    }
+
+    public void addProductoProducto(Pedido_Producto pedido_producto) {
+        pedido_productos.add(pedido_producto);
+        pedido_producto.setPedido(this);
     }
 }

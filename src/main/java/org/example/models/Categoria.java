@@ -13,7 +13,7 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
 
-    private int idCategoria;
+    private Long idCategoria;
     private String nombre;
     private String descripcion;
 
@@ -44,17 +44,17 @@ public class Categoria {
         this.productos = productos;
     }
 
-    public Categoria(int idCategoria, String nombre, String descripcion) {
+    public Categoria(String nombre, String descripcion) {
         this.idCategoria = idCategoria;
         this.nombre = nombre;
         this.descripcion = descripcion;
     }
 
-    public int getIdCategoria() {
+    public Long getIdCategoria() {
         return idCategoria;
     }
 
-    public void setIdCategoria(int idCategoria) {
+    public void setIdCategoria(Long idCategoria) {
         this.idCategoria = idCategoria;
     }
 
@@ -88,6 +88,11 @@ public class Categoria {
     }
 
     public void setName() {
+    }
+
+    public void addProducto(Producto producto) {
+        productos.add(producto);
+        producto.setCategoria(this);
     }
 
 

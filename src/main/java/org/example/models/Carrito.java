@@ -5,97 +5,57 @@ import java.util.List;
 
 public class Carrito {
 
-    private int codigoProducto;
-    private int cantidadProductos;
-    private double subTotal;
+    private ArrayList<Producto> productos;
+    private double total = 0;
 
-
-    private ArrayList<Producto> productosCarrito = new ArrayList<Producto>();
-
-    //Constructores
-
-    public Carrito(){
-        // productosEnCarro = new ArrayList<Carrito>();
+    public Carrito() {
+        this.productos = new ArrayList<>();
     }
 
-    public Carrito(int codigoProducto, int cantidadProductos, double subTotal, ArrayList<Producto> productosCarrito) {
-        this.codigoProducto = codigoProducto;
-        this.cantidadProductos = cantidadProductos;
-        this.subTotal = subTotal;
-        this.productosCarrito = productosCarrito;
+    public ArrayList<Producto> getProductos() {
+        return productos;
     }
 
-
-    //Getters and setters
-    public int getCodigoProducto() {
-        return codigoProducto;
+    public void setProductos(ArrayList<Producto> productos) {
+        this.productos = productos;
     }
 
-    public void setCodigoProducto(int codigoProducto) {
-        this.codigoProducto = codigoProducto;
+    public double getTotal() {
+        return total;
     }
 
-    public int getCantidadProductos() {
-        return cantidadProductos;
+    public void setTotal(double total) {
+        this.total = total;
     }
 
-    public void setCantidadProductos(int cantidadProductos) {
-        this.cantidadProductos = cantidadProductos;
+    public void agregarProducto(Producto producto) {
+        System.out.println("Agregando producto al carrito: " + producto);
+        productos.add(producto);
+        total += producto.getPrecio();
     }
 
-    public double getSubTotal() {
-        return subTotal;
-    }
-
-    public void setSubTotal(double subTotal) {
-        this.subTotal = subTotal;
-    }
-
-    public ArrayList<Producto> getProductosCarrito() {
-        return productosCarrito;
-    }
-
-    public void setProductosCarrito(ArrayList<Producto> productosCarrito) {
-        this.productosCarrito = productosCarrito;
-    }
-
-
-    //Métodos
-
-
-    //Borrar carrito
-    public void borrarCarrito(ArrayList productosCarrito){
-        productosCarrito.clear();
-    }
-
-
-    public void insertarProducto(Producto producto){
-        productosCarrito.add(producto);
-    }
-
-    public void elminarProducto(Carrito producto){
-        productosCarrito.remove(producto);
-    }
-
-
-
-    public boolean realizarPagoEfectivo(double montoRecibido) {
-        double pago = montoRecibido - subTotal;
-
-        if (pago >= 0) {
-            System.out.println("Pago en efectivo recibido");
-            generarBoleta();
-            return true;
+    public void eliminarProducto(Producto producto) {
+        if (productos.contains(producto)) {
+            productos.remove(producto);
+            System.out.println("Producto eliminado del carrito: " + producto);
         } else {
-            System.out.println("Pago no realizado. Por favor, realice su pago.");
-            return false;
+            System.out.println("El producto no está en el carrito.");
         }
+        System.out.println("Productos en el carrito: " + productos);
     }
 
-    private void generarBoleta() {
-
-       
+    public void mostrarCarrito() {
+        System.out.println("Contenido del carrito:");
+        if (productos.isEmpty()) {
+            System.out.println("El carrito está vacío.");
+        } else {
+            for (Producto producto : productos) {
+                System.out.println(producto);
+            }
+        }
+        System.out.println("Total a pagar:" + this.total);
     }
+
 
 
 

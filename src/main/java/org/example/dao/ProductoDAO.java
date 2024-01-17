@@ -1,5 +1,7 @@
 package org.example.dao;
 
+import org.example.models.Pedido;
+import org.example.models.Pedido_Producto;
 import org.example.models.Producto;
 import org.example.util.HibernateUtil;
 import org.hibernate.Session;
@@ -13,7 +15,7 @@ public class ProductoDAO {
     public Producto findById(Long id){
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
-            return session.get(Producto.class, 1l);
+            return session.get(Producto.class, id);
         } catch (Exception ex){
             ex.printStackTrace();
             return null;
@@ -77,6 +79,29 @@ public class ProductoDAO {
             session.delete(producto);
             transaction.commit();
         } catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    public void addPedidoProducto(Long productoId, Pedido_Producto pedido_producto) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+
+            // Obtener el producto
+            Producto producto = session.get(Producto.class, productoId);
+            if (producto != null) {
+                // Asignar idProducto al pedido producto
+                producto.addProductoProducto(pedido_producto);
+                // Guardar la actualización
+                session.saveOrUpdate(pedido_producto);
+            }
+
+            transaction.commit();
+        } catch (Exception ex) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
             ex.printStackTrace();
         }
     }
