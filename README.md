@@ -3,19 +3,17 @@ Este es un sistema desarrollado en Java que permite la gestión de usuarios con 
 
 ## Funcionalidades
 ### Menú Admin
-Gestión de Usuarios:
-
-Ver Usuarios: Visualiza la lista de usuarios registrados.
-Agregar Usuario: Permite la creación de nuevos usuarios.
-Editar Usuario: Modifica la información de un usuario existente.
-Eliminar Usuario: Elimina un usuario del sistema.
-Gestión de Productos:
-
-Ver Productos: Muestra la lista de productos disponibles.
-Agregar Producto: Añade un nuevo producto al inventario.
-Editar Producto: Modifica la información de un producto existente.
-Eliminar Producto: Elimina un producto del inventario.
-Gestión de Categorías:
+* Gestión de Usuarios:
+  * Ver Usuarios: Visualiza la lista de usuarios registrados.
+  * Agregar Usuario: Permite la creación de nuevos usuarios.
+  * Editar Usuario: Modifica la información de un usuario existente.
+  * Eliminar Usuario: Elimina un usuario del sistema.
+* Gestión de Productos:
+  * Ver Productos: Muestra la lista de productos disponibles.
+  * Agregar Producto: Añade un nuevo producto al inventario.
+  * Editar Producto: Modifica la información de un producto existente.
+  * Eliminar Producto: Elimina un producto del inventario.
+* Gestión de Categorías:
 
 Ver Categorías: Lista las categorías disponibles.
 Agregar Categoría: Crea una nueva categoría.
