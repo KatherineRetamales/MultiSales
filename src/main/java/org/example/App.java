@@ -13,11 +13,8 @@ import org.example.models.Categoria;
 import org.example.models.Pedido;
 import org.example.models.Producto;
 import org.example.models.Usuario;
-import org.hibernate.tool.schema.internal.exec.ScriptTargetOutputToFile;
 
 
-
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -121,10 +118,12 @@ public class App {
                     break;
                 case 6:
                     // Lógica para editar producto
+                    editarProductos(scanner);
                     System.out.println("Producto editado");
                     break;
                 case 7:
                     // Lógica para eliminar producto
+                    eliminarProducto(scanner);
                     System.out.println("Producto eliminado");
                     break;
                 case 8:
@@ -576,6 +575,94 @@ private static void mostrarUsuarios() {
         Producto nuevoProducto = new Producto(nombreDelProducto,cantidadDelProducto,descripcionDelProducto,precioDelProducto);
         categoriaDAO.addProducto(idCategoria, nuevoProducto);
 
+    }
+    private static void editarProductos(Scanner scanner) {
+        System.out.println("Ingresa el ID del producto a editar: ");
+        Long idProducto = scanner.nextLong();
+        ProductoDAO productoDAO = new ProductoDAO();
+        Producto producto = productoDAO.findById(idProducto);
+        System.out.println("¿Que dato del profucto desea editar?");
+        System.out.println("1. Editar nombre");
+        System.out.println("2. Editar el stock");
+        System.out.println("3. Editar la descripcion");
+        System.out.println("4. Editar el precio");
+        System.out.println("5. Ver sus datos personales");
+        System.out.println("6. Volver");
+        System.out.print("Seleccione una opción: ");
+
+        // Leer la opción del producto
+        int opcion = scanner.nextInt();
+
+        // Realizar la acción correspondiente
+        switch (opcion) {
+            case 1:
+                System.out.print("Ingrese el nuevo nombre del producto: ");
+                String nuevoNombreProducto = scanner.next();
+                producto.setNombreProducto(nuevoNombreProducto);
+                productoDAO.update(producto);
+                break;
+            case 2:
+                System.out.print("Ingrese el nuevo Stock del producto: ");
+                int nuevoStockProducto = scanner.nextInt();
+                producto.setStock(nuevoStockProducto);
+                productoDAO.update(producto);
+                break;
+            case 3:
+                System.out.print("Ingrese la nueva descripcion del producto: ");
+                String nuevaDescripcionProducto = scanner.next();
+                producto.setDescripcionProducto(nuevaDescripcionProducto);
+                productoDAO.update(producto);
+                break;
+            case 4:
+                System.out.print("Ingrese el nuevo precio del producto: ");
+                double nuevaPrecioProducto = scanner.nextInt();
+                producto.setPrecio(nuevaPrecioProducto);
+                productoDAO.update(producto);
+                break;
+            case 5:
+                System.out.println("Información del producto actualizada:");
+                System.out.println("Nombre: " + producto.getNombreProducto());
+                System.out.println("Stock: " + producto.getStock());
+                System.out.println("Descripcion: " + producto.getDescripcionProducto());
+                System.out.println("Precio: " + producto.getPrecio());
+                break;
+            case 6:
+                menuAdmin(scanner);
+                break;
+            default:
+                System.out.println("Opción no válida. Inténtelo de nuevo.");
+        }
+    }
+    public static void eliminarProducto (Scanner scanner){
+        System.out.println("Ingresa el ID del producto a eliminar: ");
+        Long idProducto = scanner.nextLong();
+        ProductoDAO productoDAO = new ProductoDAO();
+        Producto productoAEliminar = productoDAO.findById(idProducto);
+        if (productoAEliminar != null) {
+            productoDAO.delete(productoAEliminar);
+            System.out.println("Producto eliminado correctamente.");
+        } else {
+            System.out.println("No se encontró un producto con ese ID.");
+        }
+
+    }
+    private static void mostrarProducto() {
+        ProductoDAO productoDAO = new ProductoDAO();
+        List<Producto> productos = productoDAO.findAll();
+
+        if (productos != null && !productos.isEmpty()) {
+            System.out.println("\nLista de usuarios:");
+            for (Producto producto : productos) {
+                System.out.println("ID: " + producto.getIdProducto());
+                System.out.println("Nombre: " + producto.getNombreProducto());
+                System.out.println("Stock: " + producto.getStock());
+                System.out.println("Descripcion: " + producto.getDescripcionProducto());
+                System.out.println("Precio: " + producto.getPrecio());
+                System.out.println("------------------------------");
+            }
+        } else {
+            System.out.println("No se encontraron productos.");
+        }
     }
 
     public static void listarProductos(ProductoDAO productoDAO){
